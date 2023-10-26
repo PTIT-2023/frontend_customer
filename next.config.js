@@ -29,7 +29,7 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ["storage.googleapis.com"],
+    domains: ["chaucayxuatkhau.com"],
     formats: ["image/avif", "image/webp"],
   },
   env: {

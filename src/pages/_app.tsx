@@ -1,13 +1,14 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
+import '@mantine/carousel/styles.css';
 import "@/styles/globals.css";
 import { Notifications } from "@/Components/App/Notifications";
 import { MantineProvider } from "@/Components/App/MantineProvider";
 import { Header } from "@/Components/App/Header";
 import { SWRConfig } from "@/Components/App/SWRConfig";
 import { RecoilRoot } from "recoil";
-import { Blank, type ILayout } from "@/layouts";
+import { Blank, Menu, type ILayout } from "@/layouts";
 import React from "react";
 import { NextRouter, useRouter } from "next/router";
 
@@ -17,6 +18,7 @@ type ComponentType = React.ComponentType & {
 
 const layouts: Record<string, ILayout> = {
   Blank,
+  Menu,
 };
 
 type AppProps = {
