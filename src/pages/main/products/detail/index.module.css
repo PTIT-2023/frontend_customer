@@ -12,15 +12,3 @@
   flex-direction: row;
   margin-top: 2rem;
 }
-
-.avatar {
-  background-color: #EFEFEF;
-}
-
-.detail {
-  background-color: #EFEFEF;
-  padding: 2.56rem 0.56rem 0.69rem 0.56rem;
-  margin-left: 1.13rem;
-  margin-top: 0;
-  width: 100%;
-}

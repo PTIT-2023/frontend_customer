@@ -1,0 +1,22 @@
+.container {
+  margin-left: 2rem;
+}
+
+.name {
+  margin-bottom: 0.2rem;
+}
+
+.price {
+  color: #F51414;
+  margin-bottom: 0.2rem;
+}
+
+.count {
+  color: #32A10B;
+  margin-bottom: 0.2rem;
+}
+
+.count2 {
+  color: #32A10B;
+  margin-bottom: 1rem;
+}
