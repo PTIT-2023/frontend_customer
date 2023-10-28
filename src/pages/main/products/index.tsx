@@ -1,4 +1,4 @@
-import { Scroll } from "@/Components/Common/Scroll";
+import { ScrollProduct } from "@/Components/Common/ScrollProduct";
 import { ProductCard } from "@/Components/Main/Products/ProductCard";
 import { TabGroup } from "@/Components/Main/Products/TabGroup";
 import { useForm } from "@mantine/form";
@@ -47,7 +47,7 @@ export default function Products() {
     <div className={styles.container}>
       <TabGroup tabType={form.values} onTabClick={handleTabClick} />
 
-      <Scroll
+      <ScrollProduct
         loading={false}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         fetchMoreData={fetchMoreData}

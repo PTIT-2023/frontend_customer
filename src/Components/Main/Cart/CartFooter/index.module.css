@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 1rem;;
+}
+
+.total {
+  margin-bottom: 0.02rem;
+  margin-right: 0.5rem;
+}
+
+.money {
+  color: #E41212;
+  margin-right: 4.3rem;
+}
+
+.button {
+  background-color: #2BAB3F;
+  padding: 0 2rem;
+}
+
+.button:hover {
+  background-color: #134e1c;
+}
+
+.textButton {
+  color: white;
+}

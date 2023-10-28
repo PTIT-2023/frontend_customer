@@ -2,9 +2,9 @@ import { Loader } from "@/Components/Common/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.css";
 import { CSSProperties } from "react";
-import { EmptyMessage } from "@/Components/Common/Scroll/EmptyMessage";
+import { EmptyMessage } from "@/Components/Common/ScrollProduct/EmptyMessage";
 
-type ScrollProps<T> = {
+type ScrollProductProps<T> = {
   loading: boolean;
   data?: T[];
   fetchMoreData: () => void;
@@ -17,7 +17,7 @@ type ScrollProps<T> = {
   renderComponent: (index: number, item: T) => JSX.Element;
 };
 
-export function Scroll<T>({
+export function ScrollProduct<T>({
   loading,
   data,
   fetchMoreData,
@@ -28,7 +28,7 @@ export function Scroll<T>({
   scrollClassName,
   emptyMessage,
   renderComponent,
-}: ScrollProps<T>) {
+}: ScrollProductProps<T>) {
   return (
     <div className={`${styles.container} ${containerClassName}`} style={{ ...(containerStyle || {}) }}>
       {loading ? (
@@ -45,7 +45,13 @@ export function Scroll<T>({
           style={{ ...(scrollStyle || {}) }}
           className={scrollClassName}
         >
-          {(data || []).map((item: T, index: number) => renderComponent(index, item))}
+          <div className={styles.grid}>
+            {data && data.length > 0 && data.map((item: T, index: number) => (
+              <div key={index} className={styles.gridItem}>
+                {renderComponent(index, item)}
+              </div>
+            ))}
+          </div>
 
           {data?.length === 0 && <EmptyMessage message={emptyMessage} />}
         </InfiniteScroll>

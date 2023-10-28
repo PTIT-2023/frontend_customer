@@ -21,6 +21,7 @@ export const menuList = [
     id: 4,
     label: "Đơn hàng",
     address: "/main/order",
+    link: "/main/order?tab=waitForConfirmation",
     icon: "/images/order.svg",
     activeIcon: "/images/order_active.svg",
   },

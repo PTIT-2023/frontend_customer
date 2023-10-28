@@ -7,7 +7,7 @@ export function CarouselBannerItem() {
       <Image
         src="https://chaucayxuatkhau.com/wp-content/uploads/2021/11/cac-loai-cay-thuy-sinh-mau-do.jpg"
         alt="banner"
-        width={1400}
+        width={500}
         height={150}
         priority
       />

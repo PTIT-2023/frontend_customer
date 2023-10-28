@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { CSSProperties } from "react";
 
-type AvatarProps = {
+type ProductImageProps = {
   width: number;
   height: number;
   src?: string;
@@ -9,7 +9,7 @@ type AvatarProps = {
   className?: string;
 };
 
-export function ProductImage({ width, height, src, style, className }: AvatarProps) {
+export function ProductImage({ width, height, src, style, className }: ProductImageProps) {
   const defaultUrl = "/images/product_image.svg";
   const isValidUrl = src && (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("blob"));
   const imageUrl = isValidUrl ? src : defaultUrl;
