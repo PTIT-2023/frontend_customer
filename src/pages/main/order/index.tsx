@@ -1,78 +1,92 @@
 import { TabGroup } from "@/Components/Main/Order/TabGroup";
-import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./index.module.css";
 import { HeaderTable } from "@/Components/Main/Order/HeaderTable";
 import { Scroll } from "@/Components/Common/Scroll";
 import { OrderItem } from "@/Components/Main/Order/OrderItem";
+import useSWR, { mutate } from "swr";
+import { getOrderStatus, getOrders } from "@/services";
+import { OrderProps } from "@/types";
+import { LIMIT_PAGE } from "@/config/constants";
+
+const keyOrderStatus = "ORDER_STATUS";
+const keyOrder = "ORDER";
 
 export default function Order() {
+  const { data: orderStatus } = useSWR(keyOrderStatus, () => getOrderStatus());
+  const { data: listOrder, isLoading: loadingOrder } = useSWR(keyOrder, () => getData({}));
   const router = useRouter();
-  const { tab } = router.query;
   const [currentTab, setCurrentTab] = useState("");
-  const form = useForm<TabTypeProps>({
-    initialValues: {
-      waitForConfirmation: "GREEN",
-      waitingForDelivery: "GRAY",
-      delivering: "GRAY",
-      delivered: "GRAY",
-      canceled: "GRAY",
-    },
-  });
+  const [index, setIndex] = useState(1);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [orders, setOrders] = useState<OrderProps[]>([]);
+
+  useEffect(() => {
+    if(listOrder) {
+      setTotal(listOrder.totalResult ?? 0);
+      setOrders(listOrder.data ?? []);
+    }
+  }, [listOrder]);
+
+  const getData = useCallback(async ({ tabKey }: {tabKey?: string}) => {
+    return await getOrders({
+      orderStatusId: tabKey ?? currentTab,
+      page: page,
+    });
+  }, [currentTab, page]);
+
+  const onFilter = useCallback(async ({ tabKey }: {tabKey?: string}) => {
+    const products = await getData({ tabKey: tabKey });
+    mutate(keyOrder, products);
+  }, [getData]);
 
   const handleTabClick = useCallback(
     (tabKey: string) => {
-      const updatedButtonType: TabTypeProps = {
-        waitForConfirmation: "GRAY",
-        waitingForDelivery: "GRAY",
-        delivering: "GRAY",
-        delivered: "GRAY",
-        canceled: "GRAY",
-      };
-      updatedButtonType[tabKey as keyof TabTypeProps] = "GREEN";
-      form.setValues(updatedButtonType);
       setCurrentTab(tabKey);
+      setIndex((orderStatus?.findIndex(e => e.id === tabKey)  ?? 0) + 1);
       router.push("/main/order?tab=" + tabKey);
+      onFilter({ tabKey: tabKey });
     },
-    [form, router],
+    [onFilter, orderStatus, router],
   );
 
   useEffect(() => {
-    if (tab && !currentTab) {
-      tab ? handleTabClick(tab as string) : handleTabClick("waitForConfirmation");
+    if(orderStatus?.length ?? 0 > 0) {
+      orderStatus && handleTabClick(orderStatus[0].id ?? "");
     }
-  }, [currentTab, handleTabClick, tab]);
+  }, [orderStatus]);
 
   const fetchMoreData = async () => {
-    console.log("fetch more data");
+    if(page * LIMIT_PAGE < total) {
+      setPage(page + 1);
+      onFilter({});
+    }
   };
 
   return (
     <div className={styles.container}>
-      <TabGroup tabType={form.values} onTabClick={handleTabClick} />
+      <TabGroup
+        listOrderStatus={orderStatus}
+        currentTab={currentTab}
+        onTabClick={handleTabClick}
+      />
 
       <HeaderTable />
 
       <Scroll
-        loading={false}
-        data={[1, 2, 3, 4, 5, 6]}
+        loading={loadingOrder}
+        data={orders}
         fetchMoreData={fetchMoreData}
-        hasMore={false}
+        hasMore={page * LIMIT_PAGE < total}
         emptyMessage="Không có dữ liệu"
-        renderComponent={(index: number) => <OrderItem key={index} />}
+        renderComponent={(i: number, order: OrderProps) =>
+          <OrderItem key={i} order={order} index={index} reload={onFilter}/>
+        }
       />
     </div>
   );
 }
-
-export type TabTypeProps = {
-  waitForConfirmation: string;
-  waitingForDelivery: string;
-  delivering: string;
-  delivered: string;
-  canceled: string;
-};
-
 
 Order.layout = "Menu";

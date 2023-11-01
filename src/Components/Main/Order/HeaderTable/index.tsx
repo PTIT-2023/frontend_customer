@@ -5,9 +5,9 @@ import typo from "@/styles/text.module.css";
 export function HeaderTable() {
   return (
     <div className={styles.container}>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>Mã đơn hàng</Text>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>Tên khách hàng</Text>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>Ngày đặt</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>Order ID</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>Customer</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>Order Date</Text>
       <div />
       <div />
     </div>

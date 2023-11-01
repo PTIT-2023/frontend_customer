@@ -1,13 +1,49 @@
 import { ImageAndCountForm } from "@/Components/Main/Products/ProductDetail/ImageAndCountForm";
 import styles from "./index.module.css";
 import { ProductInformation } from "@/Components/Main/Products/ProductDetail/ProductInformation";
+import { useRouter } from "next/router";
+import { addProductToCart, getProductDetail } from "@/services";
+import useSWR, { mutate } from "swr";
+import { useEffect, useState } from "react";
+import { Loading } from "@/Components/Common/Loading";
+import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
+
+const key = "PRODUCT_DETAIL";
 
 export default function ProductDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+  const { data, isLoading } = useSWR(key, () => getProductDetail(id as string));
+  const [count, setCount] = useState(1);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const productDetail = await getProductDetail(id as string);
+      mutate(key, productDetail);
+    };
+    fetchData();
+  }, [id]);
+
+  const handleChangeCount = (value: number) => {
+    setCount(value);
+  };
+
+  const addToCart = async () => {
+    const res = await addProductToCart({
+      quantity: count,
+      unitPrice: data?.price,
+      productId: data?.id,
+    });
+    res ? showSuccessNotification() : showFailNotification();
+  };
+
   return (
     <div className={styles.container}>
+      {isLoading && <Loading />}
+
       <div className={styles.containerCenter}>
-        <ImageAndCountForm />
-        <ProductInformation />
+        <ImageAndCountForm product={data} count={count} onChangeCount={handleChangeCount} onAddToCart={addToCart} />
+        <ProductInformation product={data} />
       </div>
     </div>
   );

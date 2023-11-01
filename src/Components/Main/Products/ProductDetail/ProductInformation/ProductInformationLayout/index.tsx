@@ -4,7 +4,7 @@ import typo from "@/styles/text.module.css";
 
 type ProductInformationLayoutProps = {
   title: string;
-  content?: string;
+  content?: string | number;
 };
 
 export function ProductInformationLayout({ title, content }: ProductInformationLayoutProps) {

@@ -2,49 +2,56 @@ import { Group, Radio, Text, TextInput, Textarea } from "@mantine/core";
 import { AccountFormLayout } from "./AccountFormLayout";
 import { DateInput } from '@mantine/dates';
 import typo from "@/styles/text.module.css";
+import { UserProps } from "@/types";
+import { UseFormReturnType } from "@mantine/form";
 
-export function AccountForm() {
+type AccountFormProps = {
+  form: UseFormReturnType<UserProps, (values: UserProps) => UserProps>;
+  onChangeForm: (key: string, value: string | number | boolean | undefined) => void
+};
+
+export function AccountForm({ form, onChangeForm }: AccountFormProps) {
   return (
     <div>
-      <AccountFormLayout title="Họ">
+      <AccountFormLayout title="Last Name">
         <TextInput
-          value={""}
-          onChange={() => null}
+          value={form.values.lastName}
+          onChange={(event) => onChangeForm("lastName", event.currentTarget.value)}
         />
       </AccountFormLayout>
-      <AccountFormLayout title="Tên">
+      <AccountFormLayout title="First Name">
         <TextInput
-          value={""}
-          onChange={() => null}
+          value={form.values.firstName}
+          onChange={(event) => onChangeForm("firstName", event.currentTarget.value)}
         />
       </AccountFormLayout>
-      <AccountFormLayout title="Giới tính">
-        <Radio.Group>
+      <AccountFormLayout title="Gender">
+        <Radio.Group value={form.values.gender} onChange={(value) => onChangeForm("gender", value)}>
           <Group>
-            <Radio value="1" label="Nam" />
-            <Radio value="2" label="Nữ" />
+            <Radio value="MALE" label="Male" />
+            <Radio value="FEMALE" label="Female" />
           </Group>
         </Radio.Group>
       </AccountFormLayout>
-      <AccountFormLayout title="Ngày sinh">
+      <AccountFormLayout title="Date of birth">
         <DateInput
-          value={new Date()}
-          onChange={() => null}
+          value={new Date(form.values.birthday ?? "0")}
+          onChange={(value) => onChangeForm("birthday", value?.getTime())}
         />
       </AccountFormLayout>
       <AccountFormLayout title="Email">
-        <Text className={typo.size_14_300}>quocnhat71@gmail.com</Text>
+        <Text className={typo.size_14_300}>{form.values.email}</Text>
       </AccountFormLayout>
-      <AccountFormLayout title="Số điện thoại">
+      <AccountFormLayout title="Phone">
         <TextInput
-          value={""}
-          onChange={() => null}
+          value={form.values.phone}
+          onChange={(event) => onChangeForm("phone", event.currentTarget.value)}
         />
       </AccountFormLayout>
-      <AccountFormLayout title="Địa chỉ">
+      <AccountFormLayout title="Address">
         <Textarea
-          value={""}
-          onChange={() => null}
+          value={form.values.address}
+          onChange={(event) => onChangeForm("address", event.currentTarget.value)}
           autosize
           minRows={4}
           maxRows={4}

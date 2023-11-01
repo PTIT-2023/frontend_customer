@@ -13,7 +13,7 @@ export function Search() {
   return (
     <TextInput
       value={value}
-      placeholder="Tìm kiếm sản phẩm"
+      placeholder="Search..."
       onChange={onChange}
       radius={4}
       rightSection={<IconSearchGray />}

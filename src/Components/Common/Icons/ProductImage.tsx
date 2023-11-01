@@ -1,4 +1,5 @@
-import Image from "next/image";
+// import Image from "next/image";
+import { Image } from "@mantine/core";
 import { CSSProperties } from "react";
 
 type ProductImageProps = {
@@ -15,8 +16,6 @@ export function ProductImage({ width, height, src, style, className }: ProductIm
   const imageUrl = isValidUrl ? src : defaultUrl;
 
   return (
-    <div className={className} style={{ height: height, width: width, ...(style || {}) }}>
-      <Image src={imageUrl} alt="Image" width={width} height={height} priority />
-    </div>
+    <Image src={imageUrl} alt="Image" width={width} height={height} className={className} style={{ ...(style || {}) }} />
   );
 }

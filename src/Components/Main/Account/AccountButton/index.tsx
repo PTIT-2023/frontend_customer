@@ -2,11 +2,14 @@ import { Button, Text } from "@mantine/core";
 import styles from "./index.module.css";
 import typo from "@/styles/text.module.css";
 
-export function AccountButton() {
+type AccountButtonProps = {
+  onUpdateUser: () => void;
+};
+
+export function AccountButton({ onUpdateUser }: AccountButtonProps) {
   return (
     <div className={styles.container}>
       <Button
-        onClick={() => null}
         radius="xl"
         className={styles.changePasswordButton}
       >
@@ -14,7 +17,7 @@ export function AccountButton() {
       </Button>
 
       <Button
-        onClick={() => null}
+        onClick={onUpdateUser}
         radius="xl"
         className={styles.updateUserButton}
       >

@@ -1,27 +1,57 @@
 import { Button, Text } from "@mantine/core";
 import styles from "./index.module.css";
 import typo from "@/styles/text.module.css";
+import { useRouter } from "next/router";
+import { OrderProps } from "@/types";
+import { ORDER_STATUS_INDEX } from "@/config/constants";
+import { cancelOrder } from "@/services/order";
+import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
 
-export function OrderItem() {
+type OrderItemProps = {
+  order?: OrderProps;
+  index: number;
+  reload: ({ tabKey }: {
+    tabKey?: string | undefined;
+  }) => Promise<void>
+};
+
+export function OrderItem({ order, index, reload }: OrderItemProps) {
+  const router = useRouter();
+
+  const onClick = () => {
+    router.push("/main/order/detail?id=" + order?.id);
+  };
+
+  const cancel = async () => {
+    const res = await cancelOrder(order?.id);
+    if(res) {
+      showSuccessNotification();
+      reload({});
+    } else {
+      showFailNotification();
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>XXXXXXXXXXXXXXXX </Text>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>Nguyễn Quốc Nhật</Text>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>5/10/2023</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.id}</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.customerName}</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.orderDate}</Text>
       <Button
-        onClick={() => null}
+        onClick={onClick}
         radius="xl"
         className={styles.detailButton}
       >
-        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Xem chi tiết</Text>
+        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Detail</Text>
       </Button>
 
       <Button
-        onClick={() => null}
+        onClick={cancel}
         radius="xl"
         className={styles.cancelButton}
+        disabled={ORDER_STATUS_INDEX.includes(index)}
       >
-        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Huỷ đơn</Text>
+        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Cancel</Text>
       </Button>
       <div />
     </div>

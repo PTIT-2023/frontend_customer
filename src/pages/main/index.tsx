@@ -1,6 +1,6 @@
 import { CarouselBanner } from "@/Components/Main/Dashboard/CarouselBanner";
-import { NewlyImportedProducts } from "@/Components/Main/Dashboard/NewlyImportedProducts";
 import { SellingProducts } from "@/Components/Main/Dashboard/SellingProducts";
+import { NewlyImportedProducts } from "@/Components/Main/Dashboard/NewlyImportedProducts";
 import styles from "./index.module.css";
 
 export default function DashBoard() {
@@ -9,7 +9,6 @@ export default function DashBoard() {
       <CarouselBanner />
       <div className={styles.container}>
         <SellingProducts />
-
         <NewlyImportedProducts />
       </div>
     </div>

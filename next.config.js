@@ -29,10 +29,10 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ["chaucayxuatkhau.com"],
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
   },
   env: {
-    BASE_URL: "https://localhost:8080/api",
+    BASE_URL: "http://localhost:8080/api",
   }
 };

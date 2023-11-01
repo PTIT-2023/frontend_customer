@@ -1,69 +1,90 @@
 import { ScrollProduct } from "@/Components/Common/ScrollProduct";
 import { ProductCard } from "@/Components/Main/Products/ProductCard";
 import { TabGroup } from "@/Components/Main/Products/TabGroup";
-import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./index.module.css";
+import useSWR, { mutate } from "swr";
+import { getCategories, getProducts } from "@/services";
+import { ProductProps } from "@/types";
+import { LIMIT_PAGE } from "@/config/constants";
+
+const keyCategory = "CATEGORIES";
+const keyProduct = "PRODUCTS";
 
 export default function Products() {
+  const { data: categories } = useSWR(keyCategory, () => getCategories());
+  const { data: listProduct, isLoading: loadingProducts } = useSWR(keyProduct, () => getData({}));
   const router = useRouter();
-  const { tab } = router.query;
-  const [currentTab, setCurrentTab] = useState("");
-  const form = useForm<TabTypeProps>({
-    initialValues: {
-      all: "GREEN",
-      animal: "GRAY",
-      plant: "GRAY",
-    },
-  });
+  const [currentTab, setCurrentTab] = useState("all");
+  const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [products, setProducts] = useState<ProductProps[]>([]);
+
+  const getData = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string}) => {
+    return await getProducts({
+      categoryId: tabKey ?? currentTab,
+      orderByPrice: sortKey ?? sort,
+      page: page,
+      keyWord: "",
+    });
+  }, [currentTab, page, sort]);
+
+  useEffect(() => {
+    if(listProduct) {
+      setTotal(listProduct.totalResult ?? 0);
+      setProducts(listProduct.data ?? []);
+    }
+  }, [listProduct]);
+
+  const onFilter = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string}) => {
+    const products = await getData({ tabKey: tabKey, sortKey: sortKey });
+    mutate(keyProduct, products);
+  }, [getData]);
 
   const handleTabClick = useCallback(
     (tabKey: string) => {
-      const updatedButtonType: TabTypeProps = {
-        all: "GRAY",
-        animal: "GRAY",
-        plant: "GRAY",
-      };
-      updatedButtonType[tabKey as keyof TabTypeProps] = "GREEN";
-      form.setValues(updatedButtonType);
       setCurrentTab(tabKey);
       router.push("/main/products?tab=" + tabKey);
+      onFilter({ tabKey: tabKey });
     },
-    [form, router],
+    [onFilter, router],
   );
 
-  useEffect(() => {
-    if (tab && !currentTab) {
-      tab ? handleTabClick(tab as string) : handleTabClick("all");
-    }
-  }, [currentTab, handleTabClick, tab]);
+  const handleChangeSort = (value: string | null) => {
+    setSort(value ?? "");
+    onFilter({ sortKey: value ?? "" });
+  };
 
   const fetchMoreData = async () => {
-    console.log("fetch more data");
+    if(page * LIMIT_PAGE < total) {
+      setPage(page + 1);
+      onFilter({});
+    }
   };
 
   return (
     <div className={styles.container}>
-      <TabGroup tabType={form.values} onTabClick={handleTabClick} />
+      <TabGroup
+        listCategory={categories}
+        currentTab={currentTab}
+        onTabClick={handleTabClick}
+        sort={sort}
+        onChangeSort={handleChangeSort}
+      />
 
       <ScrollProduct
-        loading={false}
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        loading={loadingProducts}
+        data={products}
         fetchMoreData={fetchMoreData}
-        hasMore={false}
+        hasMore={page * LIMIT_PAGE < total}
         emptyMessage="Không có dữ liệu"
-        renderComponent={(index: number) => <ProductCard key={index} />}
+        renderComponent={(index: number, product: ProductProps) => <ProductCard key={index} product={product} />}
         containerClassName={styles.scroll}
       />
     </div>
   );
 }
-
-export type TabTypeProps = {
-  all: string;
-  animal: string;
-  plant: string;
-};
 
 Products.layout = "Menu";
