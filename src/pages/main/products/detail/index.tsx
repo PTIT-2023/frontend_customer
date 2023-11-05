@@ -29,12 +29,16 @@ export default function ProductDetail() {
   };
 
   const addToCart = async () => {
-    const res = await addProductToCart({
-      quantity: count,
-      unitPrice: data?.price,
-      productId: data?.id,
-    });
-    res ? showSuccessNotification() : showFailNotification();
+    if(!localStorage.getItem("userId")) {
+      router.push("/login");
+    } else {
+      const res = await addProductToCart({
+        quantity: count,
+        unitPrice: data?.price,
+        productId: data?.id,
+      });
+      res ? showSuccessNotification() : showFailNotification();
+    }
   };
 
   return (

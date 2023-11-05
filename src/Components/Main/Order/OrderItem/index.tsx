@@ -6,6 +6,7 @@ import { OrderProps } from "@/types";
 import { ORDER_STATUS_INDEX } from "@/config/constants";
 import { cancelOrder } from "@/services/order";
 import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
+import { formatDate } from "@/utils/date";
 
 type OrderItemProps = {
   order?: OrderProps;
@@ -23,7 +24,7 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
   };
 
   const cancel = async () => {
-    const res = await cancelOrder(order?.id);
+    const res = await cancelOrder(order?.id) as boolean;
     if(res) {
       showSuccessNotification();
       reload({});
@@ -36,7 +37,7 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
     <div className={styles.container}>
       <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.id}</Text>
       <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.customerName}</Text>
-      <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.orderDate}</Text>
+      <Text className={`${typo.size_14_600} ${styles.text}`}>{formatDate(order?.orderDate)}</Text>
       <Button
         onClick={onClick}
         radius="xl"
@@ -51,7 +52,7 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
         className={styles.cancelButton}
         disabled={ORDER_STATUS_INDEX.includes(index)}
       >
-        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Cancel</Text>
+        <Text className={`${styles.textButton} ${typo.size_14_600}`}>Cancel</Text>
       </Button>
       <div />
     </div>

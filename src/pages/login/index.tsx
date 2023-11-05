@@ -15,6 +15,7 @@ import { useCallback, useEffect } from "react";
 import { z } from "zod";
 import { IconLock } from "@tabler/icons-react";
 import { useRouter } from "next/router";
+import { Auth, login } from "@/services/auth";
 
 export default function Login() {
   const router = useRouter();
@@ -32,10 +33,23 @@ export default function Login() {
     validate: resolver,
   });
 
-  const onLogin = useCallback((value: LoginProps) => {
-    // TODO: login
-    console.log(value);
-  }, []);
+  const onLogin = useCallback(
+    async (value: LoginProps) => {
+      try {
+        const res = await login({
+          name: value.name,
+          password: value.password,
+        });
+        const token = res as Auth;
+        localStorage.setItem("token", token.token?.toString() || "");
+        localStorage.setItem("userId", token.id?.toString() || "");
+        router.push("/main");
+      } catch (e) {
+        form.setErrors({ name: "Email or Password is incorrect", password: "Email or Password is incorrect" });
+      }
+    },
+    [form, router],
+  );
 
   return (
     <Container h="100vh" size="" bg="var(--mantine-color-gray-light)">
@@ -87,4 +101,4 @@ const schema = z.object({
   name: z.string().min(1, { message: "Please enter Email" }),
 });
 const resolver = zodResolver(schema);
-type LoginProps = z.infer<typeof schema>;
+export type LoginProps = z.infer<typeof schema>;

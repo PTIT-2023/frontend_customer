@@ -24,6 +24,10 @@ export default function Order() {
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
   useEffect(() => {
+    !localStorage.getItem("userId") && router.push("/login");
+  });
+
+  useEffect(() => {
     if(listOrder) {
       setTotal(listOrder.totalResult ?? 0);
       setOrders(listOrder.data ?? []);

@@ -8,14 +8,20 @@ import { Loader } from "@/Components/Common/Loader";
 import { useEffect, useState } from "react";
 import { CartProps } from "@/types";
 import { Loading } from "@/Components/Common/Loading";
+import { useRouter } from "next/router";
 
 const key = "CART";
 
 export default function Cart() {
+  const router = useRouter();
   const { data, isLoading } = useSWR(key, () => getCarts());
   const [cartList, setCartList] = useState<CartProps[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    !localStorage.getItem("userId") && router.push("/login");
+  });
 
   useEffect(() => {
     if (data) {

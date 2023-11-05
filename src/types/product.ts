@@ -23,3 +23,12 @@ export type ProductProps = {
   price?: number;
   soldQuantity?: number;
 };
+export type ProductOrderDetail = {
+  productId: string;
+  productImage: string;
+  name: string;
+  quantity: number;
+  inventoryQuantity: number;
+  unitPrice: number;
+  totalPrice: number;
+};

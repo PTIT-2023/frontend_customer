@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import { Image } from "@mantine/core";
 import { CSSProperties } from "react";
 
@@ -16,6 +15,13 @@ export function ProductImage({ width, height, src, style, className }: ProductIm
   const imageUrl = isValidUrl ? src : defaultUrl;
 
   return (
-    <Image src={imageUrl} alt="Image" width={width} height={height} className={className} style={{ ...(style || {}) }} />
+    <Image
+      src={imageUrl}
+      alt="Image"
+      width={width}
+      height={height}
+      className={className}
+      style={{ width: "fit-content", ...(style || {}) }}
+    />
   );
 }

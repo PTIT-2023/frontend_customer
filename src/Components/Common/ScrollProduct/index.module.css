@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  height: 100%;
 }
 
 .grid {
@@ -11,4 +12,9 @@
 .gridItem {
   width: 100%;
   padding-bottom: 1rem;
+}
+
+.finalMessage {
+  text-align: center;
+  margin-bottom: 1rem;
 }

@@ -9,10 +9,12 @@ import { Response, StatusCode, UserProps } from "@/types";
 import { useEffect } from "react";
 import { Loading } from "@/Components/Common/Loading";
 import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
+import { useRouter } from "next/router";
 
 const key = "ACCOUNT";
 
 export default function Account() {
+  const router = useRouter();
   const { data, isLoading } = useSWR(key, () => getUserById());
   const form = useForm<UserProps>({
     initialValues: {
@@ -27,6 +29,10 @@ export default function Account() {
       phone: "",
       status: undefined
     },
+  });
+
+  useEffect(() => {
+    !localStorage.getItem("userId") && router.push("/login");
   });
 
   useEffect(() => {

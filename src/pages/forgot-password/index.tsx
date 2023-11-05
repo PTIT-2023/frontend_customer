@@ -1,18 +1,35 @@
+import useToggle from "@/hooks/useToggle";
+import { forgotPassword } from "@/services/auth";
 import { Anchor, Button, Center, Container, Group, Stack, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { useCallback, useState } from "react";
 import { z } from "zod";
+import { Loader } from "@/Components/Common/Loader";
 
 const ForgotPassword = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<ForgotPasswordProf>({
     initialValues: {
       email: "",
     },
     validate: resolver,
   });
-  const onSubmit = (data: ForgotPasswordProf) => {
-    // TODO: forgot password
-    console.log(data);
-  };
+  const [send, toggle] = useToggle(false);
+  const onSubmit = useCallback(
+    async (data: ForgotPasswordProf) => {
+      setIsLoading(true);
+      try {
+        const res = await forgotPassword(data);
+        res && toggle();
+      } catch (e) {
+        form.setErrors({ email: "Email  is incorrect" });
+      }
+      setIsLoading(false);
+    },
+    [form, toggle],
+  );
+
   return (
     <Container h="100vh" size="" bg="var(--mantine-color-gray-light)">
       <Container pt="5rem">
@@ -24,15 +41,25 @@ const ForgotPassword = () => {
             </Stack>
           </Center>
           <Stack p="2rem">
-            <Center bg="teal.1" h="3rem" style={{ borderRadius: "4px" }}>
-              Enter your Email and instructions will be sent to you!
-            </Center>
-            <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-              <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("email")} />
-              <Group justify="flex-end" mt="xl">
-                <Button type="submit">Reset</Button>
-              </Group>
-            </form>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <Center bg="teal.1" h="3rem" style={{ borderRadius: "4px" }}>
+                  {!send
+                    ? "Enter your Email and instructions will be sent to you!"
+                    : "The password recovery link has been sent to your Email!"}
+                </Center>
+                {!send && (
+                  <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+                    <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("email")} />
+                    <Group justify="flex-end" mt="xl">
+                      <Button type="submit">Reset</Button>
+                    </Group>
+                  </form>
+                )}
+              </>
+            )}
           </Stack>
         </Container>
         <Center mt="2rem">
@@ -51,4 +78,4 @@ const schema = z.object({
   email: z.string().min(1, { message: "Please enter Email" }),
 });
 const resolver = zodResolver(schema);
-type ForgotPasswordProf = z.infer<typeof schema>;
+export type ForgotPasswordProf = z.infer<typeof schema>;

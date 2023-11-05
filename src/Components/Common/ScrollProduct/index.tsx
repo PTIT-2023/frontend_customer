@@ -3,6 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.css";
 import { CSSProperties } from "react";
 import { EmptyMessage } from "@/Components/Common/ScrollProduct/EmptyMessage";
+import typo from "@/styles/text.module.css";
+import { Text } from "@mantine/core";
 
 type ScrollProductProps<T> = {
   loading: boolean;
@@ -39,7 +41,7 @@ export function ScrollProduct<T>({
           next={fetchMoreData}
           hasMore={hasMore}
           loader={<Loader />}
-          endMessage={null}
+          endMessage={data?.length !== 0 ? <Text className={`${typo.size_18_600} ${styles.finalMessage}`}>All is shown!</Text> : null}
           refreshFunction={() => null}
           scrollThreshold={0.5}
           style={{ ...(scrollStyle || {}) }}

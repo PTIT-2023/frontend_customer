@@ -7,7 +7,7 @@ import styles from "./index.module.css";
 import useSWR, { mutate } from "swr";
 import { getCategories, getProducts } from "@/services";
 import { ProductProps } from "@/types";
-import { LIMIT_PAGE } from "@/config/constants";
+import { LIMIT_PAGE_PRODUCT } from "@/config/constants";
 
 const keyCategory = "CATEGORIES";
 const keyProduct = "PRODUCTS";
@@ -16,20 +16,30 @@ export default function Products() {
   const { data: categories } = useSWR(keyCategory, () => getCategories());
   const { data: listProduct, isLoading: loadingProducts } = useSWR(keyProduct, () => getData({}));
   const router = useRouter();
+  const keyword = router.query.keyword as string;
   const [currentTab, setCurrentTab] = useState("all");
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductProps[]>([]);
 
-  const getData = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string}) => {
+  const getData = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string, keyword?: string}) => {
     return await getProducts({
       categoryId: tabKey ?? currentTab,
       orderByPrice: sortKey ?? sort,
       page: page,
-      keyWord: "",
+      keyWord: keyword ?? "",
     });
-  }, [currentTab, page, sort]);
+  }, [currentTab, page, sort, keyword]);
+
+  const onFilter = useCallback(async ({ tabKey, sortKey, keyword }: {tabKey?: string; sortKey?: string, keyword?: string}) => {
+    const products = await getData({ tabKey, sortKey, keyword });
+    mutate(keyProduct, products);
+  }, [getData]);
+
+  useEffect(() => {
+    keyword && onFilter({ keyword });
+  }, [keyword]);
 
   useEffect(() => {
     if(listProduct) {
@@ -37,11 +47,6 @@ export default function Products() {
       setProducts(listProduct.data ?? []);
     }
   }, [listProduct]);
-
-  const onFilter = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string}) => {
-    const products = await getData({ tabKey: tabKey, sortKey: sortKey });
-    mutate(keyProduct, products);
-  }, [getData]);
 
   const handleTabClick = useCallback(
     (tabKey: string) => {
@@ -58,7 +63,7 @@ export default function Products() {
   };
 
   const fetchMoreData = async () => {
-    if(page * LIMIT_PAGE < total) {
+    if(page * LIMIT_PAGE_PRODUCT < total) {
       setPage(page + 1);
       onFilter({});
     }
@@ -78,7 +83,7 @@ export default function Products() {
         loading={loadingProducts}
         data={products}
         fetchMoreData={fetchMoreData}
-        hasMore={page * LIMIT_PAGE < total}
+        hasMore={page * LIMIT_PAGE_PRODUCT < total}
         emptyMessage="Không có dữ liệu"
         renderComponent={(index: number, product: ProductProps) => <ProductCard key={index} product={product} />}
         containerClassName={styles.scroll}

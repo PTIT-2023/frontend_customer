@@ -12,12 +12,12 @@
 
 .money {
   color: #E41212;
-  margin-right: 4.3rem;
 }
 
 .button {
   background-color: #2BAB3F;
   padding: 0 2rem;
+  margin-left: 4.3rem;
 }
 
 .button:hover {

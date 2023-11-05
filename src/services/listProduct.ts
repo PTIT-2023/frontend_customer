@@ -2,8 +2,8 @@ import { FnType, wrapper } from "@/utils/misc";
 import axios, { AxiosRequestConfig } from "@/services/axios";
 import { ListProductProps, Response, StatusCode } from "@/types";
 import { stringifyQueryString } from "@/utils/stringifyQueryString";
-import { LIMIT_PAGE } from "@/config/constants";
 import { sortProduct } from "@/config/sortProduct";
+import { LIMIT_PAGE_PRODUCT } from "@/config/constants";
 
 function _wrapper<T>(fn: FnType<ListProductProps, T, unknown, unknown>) {
   return wrapper(fn, { __default: {} });
@@ -19,7 +19,7 @@ type GetProductsProps = {
 export const getProducts = _wrapper(async (input?: GetProductsProps) => {
   const urlObject = {
     categoryId: input?.categoryId === "all" ? "" : input?.categoryId,
-    limit: (input?.page || 1) * LIMIT_PAGE,
+    limit: (input?.page || 1) * LIMIT_PAGE_PRODUCT,
     orderByPrice: sortProduct.find(e => e.name === input?.orderByPrice)?.id,
     keyWord: input?.keyWord,
   };

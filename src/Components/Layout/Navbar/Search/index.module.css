@@ -1,4 +1,18 @@
 .textInput {
   width: 17rem;
-  margin: 0 1rem;
+  margin-left: 1rem;
+  margin-right: 0.2rem;
+}
+
+.button {
+  background-color: #2BAB3F;
+  height: 2.2rem;
+}
+
+.button:hover {
+  background-color: #134e1c;
+}
+
+.textButton {
+  color: white;
 }

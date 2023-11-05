@@ -1,14 +1,13 @@
 import { FnType, wrapper } from "@/utils/misc";
 import axios, { AxiosRequestConfig } from "@/services/axios";
 import { Response, StatusCode, UserProps } from "@/types";
-import { USER_ID } from "@/config/constants";
 
 function _wrapper<T>(fn: FnType<UserProps | Response<null>, T, unknown, unknown>) {
   return wrapper(fn, { __default: {} });
 }
 
 export const getUserById = _wrapper(async () => {
-  const res = await axios.get<AxiosRequestConfig, Response<UserProps>>(`/customer/user-infor/${USER_ID}`);
+  const res = await axios.get<AxiosRequestConfig, Response<UserProps>>(`/customer/user-infor/${localStorage.getItem("userId")}`);
   return res.code === StatusCode.Success ? res.data : {};
 });
 
