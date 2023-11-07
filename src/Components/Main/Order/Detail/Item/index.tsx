@@ -5,7 +5,7 @@ import typo from "@/styles/text.module.css";
 const OrderDetailItem = ({ item }: { item?: ProductOrderDetail }) => {
   return (
     <Box px={10} style={style}>
-      <Image w="5rem" src={item?.productImage || ""} alt={item?.name} />
+      <Image w="8rem" h="4rem" src={item?.productImage || ""} alt={item?.name} />
       <Text className={`${typo.size_16_500} `}>{item?.name}</Text>
       <Text className={`${typo.size_16_500} `}>{item?.quantity}</Text>
       <Text className={`${typo.size_16_500} `}>{item?.unitPrice}</Text>
@@ -18,6 +18,6 @@ const style = {
   display: "grid",
   alignItems: "center",
   gridTemplateColumns: " 1fr 1fr 1fr 0.5fr 0.5fr",
-  backgroundColor: "#c1c1c1",
+  backgroundColor: "#e8e8e8",
   marginTop: ".4rem",
 };

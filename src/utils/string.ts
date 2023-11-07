@@ -7,5 +7,5 @@ export function formatSoldQuantity(value?: number): string {
 }
 
 export function formatInventoryQuantity(value?: number): string {
-  return value !== undefined ? `Số lượng trong kho: ${value}` : "";
+  return value !== undefined ? `Inventory quantity: ${value}` : "";
 }

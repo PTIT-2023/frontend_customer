@@ -54,10 +54,10 @@ const Register = () => {
           <Center>
             <Stack gap="1rem" p="2rem">
               <Center fz="1.4rem">Free Register</Center>
-              <div>Get your free MyMy Store account now</div>
+              <div>Get your free AO Store account now</div>
             </Stack>
           </Center>
-          {x ? (
+          {!x ? (
             <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
               <Stack p="2rem">
                 <TextInput label="Email" placeholder={"Enter Email"} {...form.getInputProps("email")} />

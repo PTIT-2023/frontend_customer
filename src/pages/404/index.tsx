@@ -5,7 +5,7 @@ import typo from "@/styles/text.module.css";
 export default function Error404() {
   return (
     <div className={styles.container}>
-      <Text className={typo.size_20_600}>Không thể truy cập trang này</Text>
+      <Text className={typo.size_20_600}>This page cannot be accessed!</Text>
     </div>
   );
 }

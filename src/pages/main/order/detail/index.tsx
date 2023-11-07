@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { OrderDetail } from "@/types";
 import OrderDetailItem from "@/Components/Main/Order/Detail/Item";
+import { formatDate } from "@/utils/date";
 
 export default function OrderDetail() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function OrderDetail() {
   return (
     <Stack gap=".5rem" px="5rem">
       <Title fz={24}>Order Detail</Title>
-      <Stack px={20} py={5} bg="#c1c1c1">
+      <Stack px={20} py={5} bg="#e8e8e8">
         <Flex pl={10}>
           <Text fw="bold" pr={10}>
             Order ID:{" "}
@@ -45,7 +46,7 @@ export default function OrderDetail() {
           <Text fw="bold" pr={10}>
             Order Date:
           </Text>
-          {data?.orderDate}
+          {formatDate(data?.orderDate)}
         </Flex>
         <Flex pl={10}>
           <Text fw="bold" pr={10}>
@@ -55,8 +56,9 @@ export default function OrderDetail() {
         </Flex>
         <Flex pl={10}>
           <Text fw="bold" pr={10}>
-            Payment: Coin
+            Payment: 
           </Text>
+          Cash On Delivery
         </Flex>
         <Flex pl={10}>
           <Text fw="bold" pr={10}>
@@ -68,7 +70,7 @@ export default function OrderDetail() {
           <Text fw="bold" pr={10}>
             Delivery Date:
           </Text>
-          {data?.id}
+          {formatDate(data?.deliveryDate)}
         </Flex>
       </Stack>
       <Box>

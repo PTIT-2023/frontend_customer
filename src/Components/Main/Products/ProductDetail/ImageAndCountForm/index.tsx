@@ -29,7 +29,7 @@ export function ImageAndCountForm({ product, count, onChangeCount, onAddToCart }
       </Carousel>
 
       <div className={styles.count}>
-        <Text className={typo.size_14_600}>Số lượng</Text>
+        <Text className={typo.size_14_600}>Quantity</Text>
         <NumberInput
           value={count}
           onChange={(value) => onChangeCount(parseInt(value.toString()))}
@@ -44,7 +44,7 @@ export function ImageAndCountForm({ product, count, onChangeCount, onAddToCart }
         className={styles.button}
         onClick={onAddToCart}
       >
-        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Thêm vào giỏ hàng</Text>
+        <Text className={`${typo.size_14_600} ${styles.textButton}`}>Add to cart</Text>
       </Button>
     </div>
   );

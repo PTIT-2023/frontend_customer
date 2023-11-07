@@ -9,7 +9,7 @@ type MenuProps = {
 
 export function Menu({ children }: MenuProps) {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.navbar}><Navbar /></div>
 
       <div className={styles.content}>{children}</div>

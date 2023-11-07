@@ -84,7 +84,7 @@ export default function Order() {
         data={orders}
         fetchMoreData={fetchMoreData}
         hasMore={page * LIMIT_PAGE < total}
-        emptyMessage="Không có dữ liệu"
+        emptyMessage="There's no data!"
         renderComponent={(i: number, order: OrderProps) =>
           <OrderItem key={i} order={order} index={index} reload={onFilter}/>
         }

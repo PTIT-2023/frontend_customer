@@ -8,8 +8,7 @@ function _wrapper<T>(fn: FnType<boolean | Response<null> | OrderDetail, T, unkno
 }
 
 export const cancelOrder = _wrapper(async (id?: string) => {
-  const res = await axios.put<AxiosRequestConfig, Response<null>>("/customer/order/" + id);
-  return res.code === StatusCode.Success;
+  return await axios.put<AxiosRequestConfig, Response<null>>("/customer/order/" + id);
 });
 
 export const order = _wrapper(async (input?: OrderForm) => {

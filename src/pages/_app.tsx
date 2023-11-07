@@ -1,16 +1,16 @@
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/dates/styles.css";
-import '@mantine/carousel/styles.css';
+import "@mantine/carousel/styles.css";
 import "@/styles/globals.css";
 import { Notifications } from "@/Components/App/Notifications";
 import { MantineProvider } from "@/Components/App/MantineProvider";
-import { Header } from "@/Components/App/Header";
 import { SWRConfig } from "@/Components/App/SWRConfig";
 import { RecoilRoot } from "recoil";
 import { Blank, Menu, type ILayout } from "@/layouts";
 import React from "react";
 import { NextRouter, useRouter } from "next/router";
+import ServiceWrapper from "@/Components/Layout/ServiceWrapper";
 
 type ComponentType = React.ComponentType & {
   layout?: string;
@@ -36,8 +36,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <MantineProvider>
           <Notifications />
           <Layout>
-            <Header />
-            <Component {...pageProps} />
+            <ServiceWrapper>
+              <Component {...pageProps} />
+            </ServiceWrapper>
           </Layout>
         </MantineProvider>
       </RecoilRoot>

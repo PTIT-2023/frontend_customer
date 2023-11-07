@@ -2,7 +2,7 @@ import { Button, Text } from "@mantine/core";
 import styles from "./index.module.css";
 import typo from "@/styles/text.module.css";
 import { useRouter } from "next/router";
-import { OrderProps } from "@/types";
+import { OrderProps, Response, StatusCode } from "@/types";
 import { ORDER_STATUS_INDEX } from "@/config/constants";
 import { cancelOrder } from "@/services/order";
 import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
@@ -24,12 +24,12 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
   };
 
   const cancel = async () => {
-    const res = await cancelOrder(order?.id) as boolean;
-    if(res) {
-      showSuccessNotification();
+    const res = await cancelOrder(order?.id) as Response<null>;
+    if(res.code === StatusCode.Success) {
+      showSuccessNotification(res.message);
       reload({});
     } else {
-      showFailNotification();
+      showFailNotification(res.message);
     }
   };
 

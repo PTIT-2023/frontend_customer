@@ -1,7 +1,7 @@
 import { Loader } from "@/Components/Common/Loader";
 import useToggle from "@/hooks/useToggle";
 import { resetPassword } from "@/services/auth";
-import { Container, Center, Stack, Group, Button, Anchor, PasswordInput, Flex } from "@mantine/core";
+import { Container, Center, Stack, Group, Button, Anchor, PasswordInput, Flex, Text } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useParams } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -16,7 +16,6 @@ const ResetPassword = () => {
   const form = useForm<ResetPasswordProf>({
     initialValues: {
       token: "",
-      currentPassword: "",
       newPassword: "",
       confirmNewPassword: "",
     },
@@ -53,7 +52,7 @@ const ResetPassword = () => {
           <Center>
             <Stack gap="1rem" p="2rem">
               <Center fz="1.4rem">Reset Password</Center>
-              <div>Re-Password with MyMy Store.</div>
+              <div>Re-Password with AO Store.</div>
             </Stack>
           </Center>
           {isLoading ? (
@@ -63,11 +62,6 @@ const ResetPassword = () => {
               {!openModal ? (
                 <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
                   <Stack p="2rem" gap="1rem">
-                    <PasswordInput
-                      label="Current password:"
-                      placeholder="Current password"
-                      {...form.getInputProps("currentPassword")}
-                    />
                     <PasswordInput
                       label="New password:"
                       placeholder="New password"
@@ -85,12 +79,15 @@ const ResetPassword = () => {
                 </form>
               ) : (
                 <Center pb="2rem">
-                  <Anchor href="/login" underline="never">
-                    <Flex align="center">
-                      Go to Login
-                      <IconArrowRight size={16} />
-                    </Flex>
-                  </Anchor>
+                  <Stack align="center">
+                    <Text>Password has been reset!</Text>
+                    <Anchor href="/login" underline="never">
+                      <Flex align="center">
+                        Go to Login
+                        <IconArrowRight size={16} />
+                      </Flex>
+                    </Anchor>
+                  </Stack>
                 </Center>
               )}
             </>
@@ -104,7 +101,6 @@ export default ResetPassword;
 
 const schema = z.object({
   token: z.string(),
-  currentPassword: z.string().min(1, { message: "Please enter password" }),
   newPassword: z.string().min(1, { message: "Please enter password" }),
   confirmNewPassword: z.string().min(1, { message: "Please enter password" }),
 });

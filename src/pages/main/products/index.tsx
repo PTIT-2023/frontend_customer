@@ -84,7 +84,7 @@ export default function Products() {
         data={products}
         fetchMoreData={fetchMoreData}
         hasMore={page * LIMIT_PAGE_PRODUCT < total}
-        emptyMessage="Không có dữ liệu"
+        emptyMessage="There is no data!"
         renderComponent={(index: number, product: ProductProps) => <ProductCard key={index} product={product} />}
         containerClassName={styles.scroll}
       />

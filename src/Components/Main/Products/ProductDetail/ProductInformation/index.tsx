@@ -12,35 +12,35 @@ type ProductInformationProps = {
 export function ProductInformation({ product }: ProductInformationProps) {
   const list = [
     {
-      title: "Mô tả sản phẩm",
+      title: "Description",
       content: product?.description,
     },
     {
-      title: "Nhiệt độ thích hợp",
+      title: "Suitable temperature",
       content: product?.temperature,
     },
     {
-      title: "Môi trường sống",
+      title: "Habitat",
       content: product?.habitat,
     },
     {
-      title: "Loại thức ăn",
+      title: "Food type",
       content: product?.foodType,
     },
     {
-      title: "Vị trí trong bể",
+      title: "Position",
       content: product?.position,
     },
     {
-      title: "Kích thước tối đa",
+      title: "Max size",
       content: product?.maxSize,
     },
     {
-      title: "Độ PH",
+      title: "PH",
       content: product?.ph,
     },
     {
-      title: "Hình thức sinh sản",
+      title: "Reproduction method",
       content: product?.reproductionMethod,
     },
   ];
@@ -53,7 +53,7 @@ export function ProductInformation({ product }: ProductInformationProps) {
       <Text className={`${typo.size_16_300} ${styles.count}`}>{formatSoldQuantity(product?.soldQuantity)}</Text>
       <Text className={`${typo.size_16_300} ${styles.count2}`}>{formatInventoryQuantity(product?.inventoryQuantity)}</Text>
 
-      {list.map((e, i) => (e.content && <ProductInformationLayout key={i} title={e.title} content={e.content} />))}
+      {list.map((e, i) => (e.content !== undefined && e.content !== "" && <ProductInformationLayout key={i} title={e.title} content={e.content} />))}
     </div>
   );
 }

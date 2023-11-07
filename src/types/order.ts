@@ -17,6 +17,7 @@ export type OrderDetail = {
   deliveryAddress: string;
   deliveryEmail: string;
   deliveryPhone: string;
+  deliveryDate: number;
   totalPriceOrder: number;
   orderStatusId: string;
   orderStatusName: string;

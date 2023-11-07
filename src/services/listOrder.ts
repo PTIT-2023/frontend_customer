@@ -15,6 +15,7 @@ type GetOrdersProps = {
 
 export const getOrders = _wrapper(async (input?: GetOrdersProps) => {
   const urlObject = {
+    customerId: localStorage.getItem("userId") || "",
     orderStatusId: input?.orderStatusId,
     limit: (input?.page || 1) * LIMIT_PAGE,
   };

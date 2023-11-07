@@ -7,6 +7,7 @@ import useSWR, { mutate } from "swr";
 import { useEffect, useState } from "react";
 import { Loading } from "@/Components/Common/Loading";
 import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
+import { Response, StatusCode } from "@/types";
 
 const key = "PRODUCT_DETAIL";
 
@@ -36,8 +37,8 @@ export default function ProductDetail() {
         quantity: count,
         unitPrice: data?.price,
         productId: data?.id,
-      });
-      res ? showSuccessNotification() : showFailNotification();
+      }) as Response<null>;
+      res.code === StatusCode.Success ? showSuccessNotification(res.message) : showFailNotification(res.message);
     }
   };
 

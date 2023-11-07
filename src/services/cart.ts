@@ -2,7 +2,7 @@ import { FnType, wrapper } from "@/utils/misc";
 import axios, { AxiosRequestConfig } from "@/services/axios";
 import { CartProps, Response, StatusCode } from "@/types";
 
-function _wrapper<T>(fn: FnType<CartProps[] | boolean, T, unknown, unknown>) {
+function _wrapper<T>(fn: FnType<CartProps[] | Response<null> | boolean, T, unknown, unknown>) {
   return wrapper(fn, { __default: [] });
 }
 
@@ -12,8 +12,7 @@ export const getCarts = _wrapper(async () => {
 });
 
 export const deleteCart = _wrapper(async (id?: string) => {
-  const res = await axios.delete<AxiosRequestConfig, Response<null>>(`/customer/cart/${id}`);
-  return res.code === StatusCode.Success;
+  return await axios.delete<AxiosRequestConfig, Response<null>>(`/customer/cart/${id}`);
 });
 
 type ChangeQuantityProps = {
@@ -36,11 +35,10 @@ type AddProductToCartProps = {
 };
 
 export const addProductToCart = _wrapper(async (input?: AddProductToCartProps) => {
-  const res = await axios.post<AxiosRequestConfig, Response<null>>(`/customer/cart`, {
+  return await axios.post<AxiosRequestConfig, Response<null>>(`/customer/cart`, {
     quantity: input?.quantity,
     unitPrice: input?.unitPrice,
     productId: input?.productId,
     customerId: localStorage.getItem("userId"),
   });
-  return res.code === StatusCode.Success;
 });

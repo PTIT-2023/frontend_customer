@@ -86,7 +86,7 @@ export default function Order() {
     <div className={styles.container}>
       {isLoading && <Loading />}
 
-      <Text className={`${typo.size_18_600} ${styles.title}`}>Đặt hàng</Text>
+      <Text className={`${typo.size_18_600} ${styles.title}`}>Enter information to order</Text>
 
       {(cartList || []).map((e, i) =>
         <CartItem
@@ -94,6 +94,7 @@ export default function Order() {
           cart={e}
           onChangeQuantity={() => null}
           reload={() => null}
+          disabled={true}
         />
       )}
 

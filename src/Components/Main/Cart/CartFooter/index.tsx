@@ -21,7 +21,7 @@ export function CartFooter({ total, isShowButton = true }: CartFooterProps) {
         <Button
           className={styles.button}
           radius={0}
-          onClick={() => router.push("/main/cart/order")}
+          onClick={() => (total || 0) > 0 ? router.push("/main/cart/order") : null}
         >
           <Text className={`${typo.size_14_600} ${styles.textButton}`}>Buy Now</Text>
         </Button>

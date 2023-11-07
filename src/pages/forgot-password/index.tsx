@@ -21,9 +21,9 @@ const ForgotPassword = () => {
       setIsLoading(true);
       try {
         const res = await forgotPassword(data);
-        res && toggle();
+        res ? toggle() : form.setErrors({ email: "Email does not exist" });
       } catch (e) {
-        form.setErrors({ email: "Email  is incorrect" });
+        form.setErrors({ email: "Email does not exist" });
       }
       setIsLoading(false);
     },
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
           <Center>
             <Stack gap="1rem" p="2rem">
               <Center fz="1.4rem">Forgot your password?</Center>
-              <div>Re-Password with MyMy Store.</div>
+              <div>Re-Password with AO Store.</div>
             </Stack>
           </Center>
           <Stack p="2rem">

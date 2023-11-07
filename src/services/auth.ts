@@ -14,7 +14,7 @@ export type Auth = {
   tokenType?: string;
 };
 
-function _wrapper<T>(fn: FnType<Auth | string | boolean, T, unknown, unknown>) {
+function _wrapper<T>(fn: FnType<Auth | string | boolean | Response<null>, T, unknown, unknown>) {
   return wrapper(fn, { __default: undefined });
 }
 
@@ -23,7 +23,7 @@ export const login = _wrapper(async (input?: LoginProps) => {
     email: input?.name,
     password: input?.password,
   });
-  return res.code === StatusCode.Success ? res.data : res.message;
+  return res.code === StatusCode.Success ? (res.data.roles?.includes("ROLE_CUSTOMER") ? true : false) : false;
 });
 
 export const forgotPassword = _wrapper(async (input?: ForgotPasswordProf) => {
@@ -51,4 +51,17 @@ export const register = _wrapper(async (input?: RegisterProf) => {
     roleId: "8255f34f-4bc8-4dc2-90da-9d3a35f65489",
   });
   return Number(res.code) === 201 ? true : res.message;
+});
+
+type ChangePasswordProps = {
+  oldPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};
+
+export const changePassword = _wrapper(async (input?: ChangePasswordProps) => {
+  return await axios.put<AxiosRequestConfig, Response<null>>("/auth/change-password", {
+    id: localStorage.getItem("userId"),
+    ...input,
+  });
 });

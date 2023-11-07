@@ -15,14 +15,14 @@ type OrderFormProps = {
 export function OrderForm({ values, onChangeValues, onButtonClick, errors }: OrderFormProps) {
   return (
     <div className={styles.container}>
-      <Layout title="Tên người nhận">
+      <Layout title="Name">
         <TextInput
           value={values.deliveryName}
           onChange={(event) => onChangeValues("deliveryName", event.currentTarget.value)}
           error={errors.deliveryName}
         />
       </Layout>
-      <Layout title="Địa chỉ người nhận">
+      <Layout title="Address">
         <Textarea
           value={values.deliveryAddress}
           onChange={(event) => onChangeValues("deliveryAddress", event.currentTarget.value)}
@@ -32,20 +32,20 @@ export function OrderForm({ values, onChangeValues, onButtonClick, errors }: Ord
           error={errors.deliveryAddress}
         />
       </Layout>
-      <Layout title="Số điện thoại người nhận">
+      <Layout title="Phone">
         <TextInput
           value={values.deliveryPhone}
           onChange={(event) => onChangeValues("deliveryPhone", event.currentTarget.value)}
           error={errors.deliveryPhone}
         />
       </Layout>
-      <Layout title="Email người nhận" required={false}>
+      <Layout title="Email" required={false}>
         <TextInput
           value={values.deliveryEmail}
           onChange={(event) => onChangeValues("deliveryEmail", event.currentTarget.value)}
         />
       </Layout>
-      <Layout title="Ngày đặt hàng" required={false}>
+      <Layout title="Order date" required={false}>
         <DateInput
           value={new Date(values.orderDate)}
           onChange={(value) => onChangeValues("orderDate", value?.getTime() ?? 0)}
@@ -53,7 +53,7 @@ export function OrderForm({ values, onChangeValues, onButtonClick, errors }: Ord
           valueFormat="DD/MM/YYYY"
         />
       </Layout>
-      <Layout title="Ngày giao dự kiến" required={false}>
+      <Layout title="Expected delivery date" required={false}>
         <DateInput
           value={new Date(values.deliveryDate)}
           onChange={(value) => onChangeValues("deliveryDate", value?.getTime() ?? 0)}
@@ -67,7 +67,7 @@ export function OrderForm({ values, onChangeValues, onButtonClick, errors }: Ord
         radius="xl"
         className={styles.button}
       >
-        <Text className={`${typo.size_14_600} ${styles.text}`}>Xác nhận đặt hàng</Text>
+        <Text className={`${typo.size_14_600} ${styles.text}`}>Do Order</Text>
       </Button>
     </div>
   );

@@ -1,15 +1,4 @@
-import {
-  Anchor,
-  Box,
-  Button,
-  Center,
-  Checkbox,
-  Container,
-  Group,
-  PasswordInput,
-  Stack,
-  TextInput,
-} from "@mantine/core";
+import { Anchor, Box, Button, Center, Text, Container, Group, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useCallback, useEffect } from "react";
 import { z } from "zod";
@@ -40,12 +29,16 @@ export default function Login() {
           name: value.name,
           password: value.password,
         });
+        if (!res) {
+          form.setErrors({ general: "Login failed, please check your email and password again!" });
+          return;
+        }
         const token = res as Auth;
         localStorage.setItem("token", token.token?.toString() || "");
         localStorage.setItem("userId", token.id?.toString() || "");
         router.push("/main");
       } catch (e) {
-        form.setErrors({ name: "Email or Password is incorrect", password: "Email or Password is incorrect" });
+        form.setErrors({ general: "Login failed, please check your email and password again!" });
       }
     },
     [form, router],
@@ -58,7 +51,7 @@ export default function Login() {
           <Center>
             <Stack gap="1rem" p="2rem">
               <Center fz="1.4rem">Welcome Back !</Center>
-              <div>Sign in to continue to MyMy Store.</div>
+              <div>Sign in to continue to AO Store.</div>
             </Stack>
           </Center>
           <Container>
@@ -67,8 +60,8 @@ export default function Login() {
                 <form onSubmit={form.onSubmit((values) => onLogin && onLogin(values))}>
                   <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("name")} />
                   <PasswordInput label="Password" placeholder="Enter password" {...form.getInputProps("password")} />
-                  <Group justify="flex-start" mt="xl">
-                    <Checkbox defaultChecked label="Remember me" />
+                  <Group justify="center" mt="xl">
+                    {form.errors.general && <Text c="red" fz={14}>Login failed, please check your email and password again!</Text>}
                     <Button type="submit" w="100%">
                       Login
                     </Button>

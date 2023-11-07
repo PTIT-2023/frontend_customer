@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 import { menuList, menuListLogin } from "@/config/menuList";
 import { useRecoilState } from "recoil";
 import { menuTab } from "@/config/state";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Logo } from "@/Components/Common/Icons/Logo";
 import { Search } from "./Search";
 import { NavbarItem } from "./NavbarItem";
@@ -11,26 +11,20 @@ import { NavbarItem } from "./NavbarItem";
 export function Navbar() {
   const router = useRouter();
   const [active, setActive] = useRecoilState(menuTab);
-
-  let menu = menuListLogin;
-
-  if (typeof window !== 'undefined') {
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      menu = menuList;
-    }
-  }
+  const [menu, setMenu] = useState(menuListLogin);
 
   useEffect(() => {
     const path = router.pathname;
-    const item = path === "/main" ? menu[0] : menu.find((el, i) => path.startsWith(el.address) && i !== 0);
+    setMenu(localStorage.getItem("userId") ? menuList : menuListLogin);
+
+    const item = path === "/main" ? menuList[0] : menuList.find((el, i) => path.startsWith(el.address) && i !== 0);
     setActive(item?.id || 1);
-  });
+  }, [router.pathname]);
 
   const handleLinkClick = (event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>, link: string) => {
     event.preventDefault();
     if (link === "/login") {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         localStorage.clear();
       }
     }
