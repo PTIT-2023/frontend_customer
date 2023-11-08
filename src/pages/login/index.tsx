@@ -32,11 +32,12 @@ export default function Login() {
         if (!res) {
           form.setErrors({ general: "Login failed, please check your email and password again!" });
           return;
+        } else {
+          const token = res as Auth;
+          localStorage.setItem("token", token.token?.toString() || "");
+          localStorage.setItem("userId", token.id?.toString() || "");
+          router.push("/main");
         }
-        const token = res as Auth;
-        localStorage.setItem("token", token.token?.toString() || "");
-        localStorage.setItem("userId", token.id?.toString() || "");
-        router.push("/main");
       } catch (e) {
         form.setErrors({ general: "Login failed, please check your email and password again!" });
       }
@@ -61,7 +62,11 @@ export default function Login() {
                   <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("name")} />
                   <PasswordInput label="Password" placeholder="Enter password" {...form.getInputProps("password")} />
                   <Group justify="center" mt="xl">
-                    {form.errors.general && <Text c="red" fz={14}>Login failed, please check your email and password again!</Text>}
+                    {form.errors.general && (
+                      <Text c="red" fz={14}>
+                        Login failed, please check your email and password again!
+                      </Text>
+                    )}
                     <Button type="submit" w="100%">
                       Login
                     </Button>

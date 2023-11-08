@@ -23,7 +23,7 @@ export const login = _wrapper(async (input?: LoginProps) => {
     email: input?.name,
     password: input?.password,
   });
-  return res.code === StatusCode.Success ? (res.data.roles?.includes("ROLE_CUSTOMER") ? true : false) : false;
+  return res.code === StatusCode.Success ? (res.data.roles?.includes("ROLE_CUSTOMER") ? res.data : false) : false;
 });
 
 export const forgotPassword = _wrapper(async (input?: ForgotPasswordProf) => {

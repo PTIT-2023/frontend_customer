@@ -15,6 +15,7 @@ import useErrors from "@/hooks/useErrors";
 import { order } from "@/services/order";
 import { showFailNotification, showSuccessNotification } from "@/utils/notifications";
 import { useRouter } from "next/router";
+import { HeaderTable } from "@/Components/Main/Cart/HeaderTable";
 
 const key = "CART_FOR_ORDER";
 
@@ -87,7 +88,7 @@ export default function Order() {
       {isLoading && <Loading />}
 
       <Text className={`${typo.size_18_600} ${styles.title}`}>Enter information to order</Text>
-
+      <HeaderTable />
       {(cartList || []).map((e, i) =>
         <CartItem
           key={i}
