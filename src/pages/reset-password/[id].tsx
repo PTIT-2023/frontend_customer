@@ -26,8 +26,8 @@ const ResetPassword = () => {
     async (value: ResetPasswordProf) => {
       if (value.confirmNewPassword !== value.newPassword) {
         form.setErrors({
-          newPassword: "New password and confirm new password do not match.",
-          confirmNewPassword: "New password and confirm new password do not match.",
+          newPassword: "New password and confirm new password do not match!",
+          confirmNewPassword: "New password and confirm new password do not match!",
         });
         return;
       }
@@ -101,8 +101,8 @@ export default ResetPassword;
 
 const schema = z.object({
   token: z.string(),
-  newPassword: z.string().min(1, { message: "Please enter password" }),
-  confirmNewPassword: z.string().min(1, { message: "Please enter password" }),
+  newPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  confirmNewPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
 });
 const resolver = zodResolver(schema);
 export type ResetPasswordProf = z.infer<typeof schema>;

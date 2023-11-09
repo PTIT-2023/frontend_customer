@@ -94,7 +94,7 @@ const Register = () => {
           ) : (
             <Center pb="2rem">
               <Anchor href="/login" underline="never">
-                Register Success!!! Go to Login
+                Register Successfully!!! Go to Login
               </Anchor>
             </Center>
           )}
@@ -113,16 +113,15 @@ export default Register;
 
 const phoneRegex = new RegExp(/^[0-9]{9,15}$/);
 const schema = z.object({
-  email: z.string().min(1, { message: "Please enter Email" }),
-  password: z.string().min(1, { message: "Please enter Password" }),
-  confirmPassword: z.string().min(1, { message: "Please enter Confirm Password" }),
+  email: z.string().refine((value) => /\S+@\S+\.\S+/.test(value), { message: "Invalid email format", }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
   firstName: z.string().min(1, { message: "Please enter firstName" }),
   lastName: z.string().min(1, { message: "Please enter lastName" }),
   birthday: z.date(),
   gender: z.string().min(1, { message: "Please select a gender" }),
   address: z.string().min(1, { message: "Please enter address" }),
-  phone: z.string().min(1, { message: "Please enter Phone" }).regex(phoneRegex, "Invalid Phone number!"),
-  // roleId: z.string().min(1, { message: "Please enter Phone" }),
+  phone: z.string().regex(phoneRegex, "Invalid Phone number!"),
 });
 
 const resolver = zodResolver(schema);

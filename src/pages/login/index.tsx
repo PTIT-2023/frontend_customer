@@ -95,8 +95,10 @@ export default function Login() {
   );
 }
 const schema = z.object({
-  password: z.string().min(1, { message: "Please enter password" }),
-  name: z.string().min(1, { message: "Please enter Email" }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  name: z.string().refine((value) => /\S+@\S+\.\S+/.test(value), {
+    message: "Invalid email format",
+  }),
 });
 const resolver = zodResolver(schema);
 export type LoginProps = z.infer<typeof schema>;

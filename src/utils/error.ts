@@ -50,13 +50,9 @@ export function checkErrorChangePassWord(input: ChangePasswordProps):
     } {
   const schema = z
     .object({
-      currentPassword: z
-        .string()
-        .nonempty({ message: "This field is required!" }),
-      newPassword: z
-        .string()
-        .nonempty({ message: "This field is required!" }),
-      newPassword2: z.string().nonempty({ message: "This field is required!" }),
+      currentPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+      newPassword: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+      newPassword2: z.string().min(8, { message: "Password must be at least 8 characters long" }),
     })
     .refine((data) => data.newPassword === data.newPassword2, {
       message: "Not match!",
