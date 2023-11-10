@@ -41,7 +41,7 @@ export const resetPassword = _wrapper(async (input?: ResetPasswordProf) => {
 });
 
 export const register = _wrapper(async (input?: RegisterProf) => {
-  const birthdayTimestamp = input && Math.floor(new Date(input.birthday).getTime() / 1000);
+  const birthdayTimestamp = input && new Date(input.birthday).getTime();
   const data = {
     ...input,
     birthday: birthdayTimestamp,

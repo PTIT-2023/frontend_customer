@@ -36,6 +36,7 @@ export function AccountForm({ form, onChangeForm }: AccountFormProps) {
       <AccountFormLayout title="Date of birth">
         <DateInput
           value={new Date(form.values.birthday ?? "0")}
+          valueFormat="DD/MM/YYYY"
           onChange={(value) => onChangeForm("birthday", value?.getTime())}
         />
       </AccountFormLayout>

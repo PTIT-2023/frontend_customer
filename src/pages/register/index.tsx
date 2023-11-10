@@ -16,7 +16,7 @@ const Register = () => {
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      gender: "male",
+      gender: "MALE",
       birthday: new Date(),
       address: "",
       phone: "",
@@ -77,8 +77,8 @@ const Register = () => {
                 />
                 <Radio.Group value={form.values.gender} name="gender" label="Gender" onChange={handleGenderChange}>
                   <Group>
-                    <Radio label="Male" value="male" checked={form.values.gender === "male"} />
-                    <Radio label="Female" value="female" checked={form.values.gender === "female"} />
+                    <Radio label="Male" value="MALE" checked={form.values.gender === "MALE"} />
+                    <Radio label="Female" value="FEMALE" checked={form.values.gender === "FEMALE"} />
                   </Group>
                 </Radio.Group>
                 <TextInput label="Address" placeholder={"Enter Address"} {...form.getInputProps("address")} />

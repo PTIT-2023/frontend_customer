@@ -20,7 +20,7 @@ export function CartItem({ cart, onChangeQuantity, reload, disabled = false }: C
     if(parseInt(value.toString()) <= (cart?.inventoryQuantity ?? 0)) {
       onChangeQuantity(cart?.id, value.toString());
     } else {
-      alert("Chỉ còn lại " + cart?.inventoryQuantity + " sản phẩm");
+      alert("There are " + cart?.inventoryQuantity + " products left!");
     }
   };
 
