@@ -10,7 +10,6 @@ import { RecoilRoot } from "recoil";
 import { Blank, Menu, type ILayout } from "@/layouts";
 import React from "react";
 import { NextRouter, useRouter } from "next/router";
-import ServiceWrapper from "@/Components/Layout/ServiceWrapper";
 
 type ComponentType = React.ComponentType & {
   layout?: string;
@@ -36,9 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <MantineProvider>
           <Notifications />
           <Layout>
-            <ServiceWrapper>
-              <Component {...pageProps} />
-            </ServiceWrapper>
+            <Component {...pageProps} />
           </Layout>
         </MantineProvider>
       </RecoilRoot>

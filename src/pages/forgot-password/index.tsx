@@ -5,6 +5,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { useCallback, useState } from "react";
 import { z } from "zod";
 import { Loader } from "@/Components/Common/Loader";
+import AuthLayout from "@/Components/Layout/AuthLayout";
 
 const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,45 +32,43 @@ const ForgotPassword = () => {
   );
 
   return (
-    <Container h="100vh" size="" bg="var(--mantine-color-gray-light)">
-      <Container pt="5rem">
-        <Container size="xs" p={0} bg="white" style={{ borderRadius: "4px" }}>
-          <Center>
-            <Stack gap="1rem" p="2rem">
-              <Center fz="1.4rem">Forgot your password?</Center>
-              <div>Re-Password with AO Store.</div>
-            </Stack>
-          </Center>
-          <Stack p="2rem">
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <>
-                <Center bg="teal.1" h="3rem" style={{ borderRadius: "4px" }}>
-                  {!send
-                    ? "Enter your Email and instructions will be sent to you!"
-                    : "The password recovery link has been sent to your Email!"}
-                </Center>
-                {!send && (
-                  <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-                    <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("email")} />
-                    <Group justify="flex-end" mt="xl">
-                      <Button type="submit">Reset</Button>
-                    </Group>
-                  </form>
-                )}
-              </>
-            )}
-          </Stack>
-        </Container>
-        <Center mt="2rem">
-          Remember It ?&nbsp;
-          <Anchor href="/login" underline="never">
-            Sign In here
-          </Anchor>
-        </Center>
+    <AuthLayout>
+      <Center>
+        <Stack gap=".5rem" pb="1rem">
+          <Center fz="1.4rem">Forgot your password?</Center>
+          <div>Re-Password with AO Store.</div>
+        </Stack>
+      </Center>
+      <Container size="xs" p={0} bg="white" style={{ borderRadius: "4px" }}>
+        <Stack p="1rem">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <Center bg="teal.1" h="3rem" style={{ borderRadius: "4px" }}>
+                {!send
+                  ? "Enter your Email and instructions will be sent to you!"
+                  : "The password recovery link has been sent to your Email!"}
+              </Center>
+              {!send && (
+                <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+                  <TextInput label="Email" placeholder={"Enter email"} {...form.getInputProps("email")} />
+                  <Group justify="flex-end" mt="xl">
+                    <Button type="submit">Reset</Button>
+                  </Group>
+                </form>
+              )}
+            </>
+          )}
+        </Stack>
       </Container>
-    </Container>
+      <Center mt="1rem">
+        Remember It ?&nbsp;
+        <Anchor href="/login" underline="never">
+          Sign In here
+        </Anchor>
+      </Center>
+    </AuthLayout>
   );
 };
 export default ForgotPassword;

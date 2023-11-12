@@ -1,4 +1,3 @@
-import { AUTHORIZATION } from "@/config/constants";
 import Axios, { AxiosRequestConfig as RequestConfig } from "axios";
 export type AxiosRequestConfig = RequestConfig<undefined>;
 
@@ -14,8 +13,8 @@ const axiosInstance = Axios.create({
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    if (localStorage.getItem(AUTHORIZATION)) {
-      config.headers.Authorization = `Bearer ${localStorage.getItem(AUTHORIZATION)}`;
+    if (localStorage.getItem("token")) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
     }
     return config;
   },
