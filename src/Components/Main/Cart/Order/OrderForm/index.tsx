@@ -62,11 +62,7 @@ export function OrderForm({ values, onChangeValues, onButtonClick, errors }: Ord
         />
       </Layout>
 
-      <Button
-        onClick={onButtonClick}
-        radius="xl"
-        className={styles.button}
-      >
+      <Button onClick={onButtonClick} radius="xl" className={styles.button}>
         <Text className={`${typo.size_14_600} ${styles.text}`}>Do Order</Text>
       </Button>
     </div>

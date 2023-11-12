@@ -7,7 +7,9 @@ function _wrapper<T>(fn: FnType<CartProps[] | Response<null> | boolean, T, unkno
 }
 
 export const getCarts = _wrapper(async () => {
-  const res = await axios.get<AxiosRequestConfig, Response<CartProps[]>>(`/customer/cart?customerId=${localStorage.getItem("userId")}`);
+  const res = await axios.get<AxiosRequestConfig, Response<CartProps[]>>(
+    `/customer/cart?customerId=${localStorage.getItem("userId")}`,
+  );
   return res.code === StatusCode.Success ? res.data : [];
 });
 

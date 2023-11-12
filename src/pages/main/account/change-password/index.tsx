@@ -15,7 +15,7 @@ export default function ChangePassword() {
       currentPassword: "",
       newPassword: "",
       newPassword2: "",
-    }
+    },
   });
 
   const onButtonClick = async () => {
@@ -24,12 +24,12 @@ export default function ChangePassword() {
       typeof error === "object" ? form.setErrors(error) : form.clearErrors();
       return;
     }
-    const res = await changePassword({
+    const res = (await changePassword({
       oldPassword: form.values.currentPassword,
       newPassword: form.values.newPassword,
       newPasswordConfirm: form.values.newPassword2,
-    }) as Response<null>;
-    if(res.code === StatusCode.Success) {
+    })) as Response<null>;
+    if (res.code === StatusCode.Success) {
       showSuccessNotification(res.message);
       router.push("/main/account");
     } else {
@@ -37,21 +37,24 @@ export default function ChangePassword() {
     }
   };
 
-
   return (
     <div className={styles.container}>
       <div className={styles.centerContainer}>
         <Text className={`${typo.size_24_600} ${styles.title}`}>Change Password</Text>
 
-        <PasswordInput label="Current Password" {...form.getInputProps("currentPassword")} className={styles.passwordInput} />
+        <PasswordInput
+          label="Current Password"
+          {...form.getInputProps("currentPassword")}
+          className={styles.passwordInput}
+        />
         <PasswordInput label="New Password" {...form.getInputProps("newPassword")} className={styles.passwordInput} />
-        <PasswordInput label="Confirm Password" {...form.getInputProps("newPassword2")} className={styles.passwordInput} />
+        <PasswordInput
+          label="Confirm Password"
+          {...form.getInputProps("newPassword2")}
+          className={styles.passwordInput}
+        />
 
-        <Button
-          radius={0}
-          className={styles.button}
-          onClick={onButtonClick}
-        >
+        <Button radius={0} className={styles.button} onClick={onButtonClick}>
           Change
         </Button>
       </div>

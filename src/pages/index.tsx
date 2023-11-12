@@ -8,7 +8,5 @@ export default function Main() {
     router.push("/main");
   });
 
-  return (
-    <></>
-  );
+  return <></>;
 }

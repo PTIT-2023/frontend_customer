@@ -39,7 +39,7 @@ export function TabGroup({ listCategory, currentTab, onTabClick, sort, onChangeS
         placeholder="Sort by price"
         value={sort}
         onChange={onChangeSort}
-        data={sortProduct.map(e => e.name)}
+        data={sortProduct.map((e) => e.name)}
         allowDeselect
       />
     </div>

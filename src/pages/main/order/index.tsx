@@ -28,28 +28,34 @@ export default function Order() {
   });
 
   useEffect(() => {
-    if(listOrder) {
+    if (listOrder) {
       setTotal(listOrder.totalResult ?? 0);
       setOrders(listOrder.data ?? []);
     }
   }, [listOrder]);
 
-  const getData = useCallback(async ({ tabKey }: {tabKey?: string}) => {
-    return await getOrders({
-      orderStatusId: tabKey ?? currentTab,
-      page: page,
-    });
-  }, [currentTab, page]);
+  const getData = useCallback(
+    async ({ tabKey }: { tabKey?: string }) => {
+      return await getOrders({
+        orderStatusId: tabKey ?? currentTab,
+        page: page,
+      });
+    },
+    [currentTab, page],
+  );
 
-  const onFilter = useCallback(async ({ tabKey }: {tabKey?: string}) => {
-    const products = await getData({ tabKey: tabKey });
-    mutate(keyOrder, products);
-  }, [getData]);
+  const onFilter = useCallback(
+    async ({ tabKey }: { tabKey?: string }) => {
+      const products = await getData({ tabKey: tabKey });
+      mutate(keyOrder, products);
+    },
+    [getData],
+  );
 
   const handleTabClick = useCallback(
     (tabKey: string) => {
       setCurrentTab(tabKey);
-      setIndex((orderStatus?.findIndex(e => e.id === tabKey)  ?? 0) + 1);
+      setIndex((orderStatus?.findIndex((e) => e.id === tabKey) ?? 0) + 1);
       router.push("/main/order?tab=" + tabKey);
       onFilter({ tabKey: tabKey });
     },
@@ -57,13 +63,13 @@ export default function Order() {
   );
 
   useEffect(() => {
-    if(orderStatus?.length ?? 0 > 0) {
+    if (orderStatus?.length ?? 0 > 0) {
       orderStatus && handleTabClick(orderStatus[0].id ?? "");
     }
   }, [orderStatus]);
 
   const fetchMoreData = async () => {
-    if(page * LIMIT_PAGE < total) {
+    if (page * LIMIT_PAGE < total) {
       setPage(page + 1);
       onFilter({});
     }
@@ -71,11 +77,7 @@ export default function Order() {
 
   return (
     <div className={styles.container}>
-      <TabGroup
-        listOrderStatus={orderStatus}
-        currentTab={currentTab}
-        onTabClick={handleTabClick}
-      />
+      <TabGroup listOrderStatus={orderStatus} currentTab={currentTab} onTabClick={handleTabClick} />
 
       <HeaderTable />
 
@@ -85,9 +87,9 @@ export default function Order() {
         fetchMoreData={fetchMoreData}
         hasMore={page * LIMIT_PAGE < total}
         emptyMessage="There's no data!"
-        renderComponent={(i: number, order: OrderProps) =>
-          <OrderItem key={i} order={order} index={index} reload={onFilter}/>
-        }
+        renderComponent={(i: number, order: OrderProps) => (
+          <OrderItem key={i} order={order} index={index} reload={onFilter} />
+        )}
       />
     </div>
   );

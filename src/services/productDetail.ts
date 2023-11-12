@@ -7,7 +7,7 @@ function _wrapper<T>(fn: FnType<ProductProps, T, unknown, unknown>) {
 }
 
 export const getProductDetail = _wrapper(async (productId?: string) => {
-  if(!productId) {
+  if (!productId) {
     return;
   }
   const res = await axios.get<AxiosRequestConfig, Response<ProductProps>>(`/customer/products/${productId}`);

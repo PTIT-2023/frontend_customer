@@ -7,7 +7,9 @@ function _wrapper<T>(fn: FnType<UserProps | Response<null>, T, unknown, unknown>
 }
 
 export const getUserById = _wrapper(async () => {
-  const res = await axios.get<AxiosRequestConfig, Response<UserProps>>(`/customer/user-infor/${localStorage.getItem("userId")}`);
+  const res = await axios.get<AxiosRequestConfig, Response<UserProps>>(
+    `/customer/user-infor/${localStorage.getItem("userId")}`,
+  );
   return res.code === StatusCode.Success ? res.data : {};
 });
 

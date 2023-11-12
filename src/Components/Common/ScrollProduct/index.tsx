@@ -41,18 +41,24 @@ export function ScrollProduct<T>({
           next={fetchMoreData}
           hasMore={hasMore}
           loader={<Loader />}
-          endMessage={data?.length !== 0 ? <Text className={`${typo.size_18_600} ${styles.finalMessage}`}>All is shown!</Text> : null}
+          endMessage={
+            data?.length !== 0 ? (
+              <Text className={`${typo.size_18_600} ${styles.finalMessage}`}>All is shown!</Text>
+            ) : null
+          }
           refreshFunction={() => null}
           scrollThreshold={0.5}
           style={{ ...(scrollStyle || {}) }}
           className={scrollClassName}
         >
           <div className={styles.grid}>
-            {data && data.length > 0 && data.map((item: T, index: number) => (
-              <div key={index} className={styles.gridItem}>
-                {renderComponent(index, item)}
-              </div>
-            ))}
+            {data &&
+              data.length > 0 &&
+              data.map((item: T, index: number) => (
+                <div key={index} className={styles.gridItem}>
+                  {renderComponent(index, item)}
+                </div>
+              ))}
           </div>
 
           {data?.length === 0 && <EmptyMessage message={emptyMessage} />}

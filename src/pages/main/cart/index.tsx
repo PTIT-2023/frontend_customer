@@ -56,14 +56,9 @@ export default function Cart() {
       <HeaderTable />
       {isLoading && <Loader />}
       {loading && <Loading />}
-      {(cartList || []).map((e, i) =>
-        <CartItem
-          key={i}
-          cart={e}
-          onChangeQuantity={handleChangeQuantity}
-          reload={reload}
-        />
-      )}
+      {(cartList || []).map((e, i) => (
+        <CartItem key={i} cart={e} onChangeQuantity={handleChangeQuantity} reload={reload} />
+      ))}
       <CartFooter total={total} />
     </div>
   );

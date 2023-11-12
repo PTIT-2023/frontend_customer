@@ -27,7 +27,7 @@ export default function Account() {
       gender: "",
       address: "",
       phone: "",
-      status: undefined
+      status: undefined,
     },
   });
 
@@ -37,7 +37,7 @@ export default function Account() {
 
   useEffect(() => {
     const user = data as UserProps;
-    if(user?.id) {
+    if (user?.id) {
       form.setValues(user);
     }
   }, [data]);
@@ -47,8 +47,8 @@ export default function Account() {
   };
 
   const updateUserInformation = async () => {
-    const res = await updateUser(form.values) as Response<null>;
-    if(res.code === StatusCode.Success) {
+    const res = (await updateUser(form.values)) as Response<null>;
+    if (res.code === StatusCode.Success) {
       showSuccessNotification(res.message);
     } else {
       showFailNotification(res.message);

@@ -19,9 +19,11 @@ export function SellingProducts() {
       {isLoading && <Loader />}
 
       <Carousel slideSize="sx" slideGap="xs" loop align="start" controlSize={20} className={styles.carousel}>
-        {(data || []).map((e, i) =>
-          <Carousel.Slide key={i}><ProductCard product={e} /></Carousel.Slide>
-        )}
+        {(data || []).map((e, i) => (
+          <Carousel.Slide key={i}>
+            <ProductCard product={e} />
+          </Carousel.Slide>
+        ))}
       </Carousel>
     </>
   );

@@ -2,7 +2,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  margin-top: 1rem;;
+  margin-top: 1rem;
 }
 
 .total {
@@ -11,11 +11,11 @@
 }
 
 .money {
-  color: #E41212;
+  color: #e41212;
 }
 
 .button {
-  background-color: #2BAB3F;
+  background-color: #2bab3f;
   padding: 0 2rem;
   margin-left: 4.3rem;
 }

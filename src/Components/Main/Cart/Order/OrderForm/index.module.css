@@ -5,13 +5,13 @@
 }
 
 .button {
-  background-color: #2DA323;
+  background-color: #2da323;
   margin-right: 0.5rem;
   justify-content: flex-end;
 }
 
 .button:hover {
-  background-color: #103a0d
+  background-color: #103a0d;
 }
 
 .text {

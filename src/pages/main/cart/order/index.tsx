@@ -39,7 +39,7 @@ export default function Order() {
       deliveryEmail: "",
       deliveryPhone: "",
       totalPrice: 0,
-    }
+    },
   });
 
   const { errors, setErrors, clearErrors } = useErrors({
@@ -74,8 +74,8 @@ export default function Order() {
       typeof error === "object" ? setErrors(error) : clearErrors();
       return;
     }
-    const res = await order(form.values) as Response<null>;
-    if(res.code === StatusCode.Success) {
+    const res = (await order(form.values)) as Response<null>;
+    if (res.code === StatusCode.Success) {
       showSuccessNotification(res.message);
       router.push("/main/order");
     } else {
@@ -89,24 +89,13 @@ export default function Order() {
 
       <Text className={`${typo.size_18_600} ${styles.title}`}>Enter information to order</Text>
       <HeaderTable />
-      {(cartList || []).map((e, i) =>
-        <CartItem
-          key={i}
-          cart={e}
-          onChangeQuantity={() => null}
-          reload={() => null}
-          disabled={true}
-        />
-      )}
+      {(cartList || []).map((e, i) => (
+        <CartItem key={i} cart={e} onChangeQuantity={() => null} reload={() => null} disabled={true} />
+      ))}
 
       <CartFooter total={form.values.totalPrice} isShowButton={false} />
 
-      <OrderForm
-        values={form.values}
-        onChangeValues={handleChangeForm}
-        onButtonClick={onButtonClick}
-        errors={errors}
-      />
+      <OrderForm values={form.values} onChangeValues={handleChangeForm} onButtonClick={onButtonClick} errors={errors} />
     </div>
   );
 }

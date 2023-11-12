@@ -17,15 +17,15 @@ export function CartFooter({ total, isShowButton = true }: CartFooterProps) {
       <Text className={`${typo.size_14_300} ${styles.total}`}>Total: </Text>
       <Text className={`${typo.size_24_600} ${styles.money}`}>{formatPrice(total)}</Text>
 
-      {isShowButton &&
+      {isShowButton && (
         <Button
           className={styles.button}
           radius={0}
-          onClick={() => (total || 0) > 0 ? router.push("/main/cart/order") : null}
+          onClick={() => ((total || 0) > 0 ? router.push("/main/cart/order") : null)}
         >
           <Text className={`${typo.size_14_600} ${styles.textButton}`}>Buy Now</Text>
         </Button>
-      }
+      )}
     </div>
   );
 }

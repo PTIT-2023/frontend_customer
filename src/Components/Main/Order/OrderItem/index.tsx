@@ -11,9 +11,7 @@ import { formatDate } from "@/utils/date";
 type OrderItemProps = {
   order?: OrderProps;
   index: number;
-  reload: ({ tabKey }: {
-    tabKey?: string | undefined;
-  }) => Promise<void>
+  reload: ({ tabKey }: { tabKey?: string | undefined }) => Promise<void>;
 };
 
 export function OrderItem({ order, index, reload }: OrderItemProps) {
@@ -24,8 +22,8 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
   };
 
   const cancel = async () => {
-    const res = await cancelOrder(order?.id) as Response<null>;
-    if(res.code === StatusCode.Success) {
+    const res = (await cancelOrder(order?.id)) as Response<null>;
+    if (res.code === StatusCode.Success) {
       showSuccessNotification(res.message);
       reload({});
     } else {
@@ -38,11 +36,7 @@ export function OrderItem({ order, index, reload }: OrderItemProps) {
       <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.id}</Text>
       <Text className={`${typo.size_14_600} ${styles.text}`}>{order?.customerName}</Text>
       <Text className={`${typo.size_14_600} ${styles.text}`}>{formatDate(order?.orderDate)}</Text>
-      <Button
-        onClick={onClick}
-        radius="xl"
-        className={styles.detailButton}
-      >
+      <Button onClick={onClick} radius="xl" className={styles.detailButton}>
         <Text className={`${typo.size_14_600} ${styles.textButton}`}>Detail</Text>
       </Button>
 

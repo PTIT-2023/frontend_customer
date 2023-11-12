@@ -44,9 +44,9 @@ type ChangePasswordProps = {
 export function checkErrorChangePassWord(input: ChangePasswordProps):
   | boolean
   | {
-    currentPassword: string;
-    newPassword: string;
-    newPassword2: string;
+      currentPassword: string;
+      newPassword: string;
+      newPassword2: string;
     } {
   const schema = z
     .object({

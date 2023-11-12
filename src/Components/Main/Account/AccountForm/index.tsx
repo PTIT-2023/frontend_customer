@@ -1,13 +1,13 @@
 import { Group, Radio, Text, TextInput, Textarea } from "@mantine/core";
 import { AccountFormLayout } from "./AccountFormLayout";
-import { DateInput } from '@mantine/dates';
+import { DateInput } from "@mantine/dates";
 import typo from "@/styles/text.module.css";
 import { UserProps } from "@/types";
 import { UseFormReturnType } from "@mantine/form";
 
 type AccountFormProps = {
   form: UseFormReturnType<UserProps, (values: UserProps) => UserProps>;
-  onChangeForm: (key: string, value: string | number | boolean | undefined) => void
+  onChangeForm: (key: string, value: string | number | boolean | undefined) => void;
 };
 
 export function AccountForm({ form, onChangeForm }: AccountFormProps) {
@@ -44,10 +44,7 @@ export function AccountForm({ form, onChangeForm }: AccountFormProps) {
         <Text className={typo.size_14_300}>{form.values.email}</Text>
       </AccountFormLayout>
       <AccountFormLayout title="Phone">
-        <TextInput
-          value={form.values.phone}
-          onChange={(event) => onChangeForm("phone", event.currentTarget.value)}
-        />
+        <TextInput value={form.values.phone} onChange={(event) => onChangeForm("phone", event.currentTarget.value)} />
       </AccountFormLayout>
       <AccountFormLayout title="Address">
         <Textarea

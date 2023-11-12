@@ -20,11 +20,7 @@ type NavbarItemProps = {
 
 export function NavbarItem({ activeItem, item, onClick }: NavbarItemProps) {
   return (
-    <Link
-      className={styles.container}
-      href={item.link ?? item.address}
-      onClick={onClick}
-    >
+    <Link className={styles.container} href={item.link ?? item.address} onClick={onClick}>
       {item.icon && <IconMenu iconName={item.id !== activeItem ? item.icon : item.activeIcon ?? ""} />}
 
       <Text

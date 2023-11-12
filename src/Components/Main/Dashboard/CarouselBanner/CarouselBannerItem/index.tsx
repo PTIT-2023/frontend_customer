@@ -1,11 +1,11 @@
 import { Carousel } from "@mantine/carousel";
 import Image from "next/image";
 
-export function CarouselBannerItem() {
+export function CarouselBannerItem({src}:{src:string}) {
   return (
     <Carousel.Slide>
       <Image
-        src="https://chaucayxuatkhau.com/wp-content/uploads/2021/11/cac-loai-cay-thuy-sinh-mau-do.jpg"
+        src={src}
         alt="banner"
         width={500}
         height={150}

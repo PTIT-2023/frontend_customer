@@ -6,5 +6,5 @@ export const sortProduct = [
   {
     id: "DESC",
     name: "Price: High to Low",
-  }
+  },
 ];

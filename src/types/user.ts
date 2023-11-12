@@ -4,7 +4,7 @@ export type UserProps = {
   email?: string;
   firstName?: string;
   lastName?: string;
-  birthday?: number
+  birthday?: number;
   gender?: string;
   address?: string;
   phone?: string;

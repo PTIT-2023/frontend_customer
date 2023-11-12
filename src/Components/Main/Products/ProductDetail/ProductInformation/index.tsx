@@ -45,15 +45,21 @@ export function ProductInformation({ product }: ProductInformationProps) {
     },
   ];
 
-
   return (
     <div className={styles.container}>
       <Text className={`${typo.size_24_600} ${styles.name}`}>{product?.name}</Text>
       <Text className={`${typo.size_18_600} ${styles.price}`}>{formatPrice(product?.price)}</Text>
       <Text className={`${typo.size_16_300} ${styles.count}`}>{formatSoldQuantity(product?.soldQuantity)}</Text>
-      <Text className={`${typo.size_16_300} ${styles.count2}`}>{formatInventoryQuantity(product?.inventoryQuantity)}</Text>
+      <Text className={`${typo.size_16_300} ${styles.count2}`}>
+        {formatInventoryQuantity(product?.inventoryQuantity)}
+      </Text>
 
-      {list.map((e, i) => (e.content !== undefined && e.content !== "" && <ProductInformationLayout key={i} title={e.title} content={e.content} />))}
+      {list.map(
+        (e, i) =>
+          e.content !== undefined &&
+          e.content !== null &&
+          e.content !== "" && <ProductInformationLayout key={i} title={e.title} content={e.content} />,
+      )}
     </div>
   );
 }

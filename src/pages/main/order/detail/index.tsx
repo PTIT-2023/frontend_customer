@@ -56,7 +56,7 @@ export default function OrderDetail() {
         </Flex>
         <Flex pl={10}>
           <Text fw="bold" pr={10}>
-            Payment: 
+            Payment:
           </Text>
           Cash On Delivery
         </Flex>

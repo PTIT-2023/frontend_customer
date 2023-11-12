@@ -19,11 +19,7 @@ export function AccountButton({ onUpdateUser }: AccountButtonProps) {
         <Text className={`${typo.size_14_600} ${styles.textButton}`}>Change Password</Text>
       </Button>
 
-      <Button
-        onClick={onUpdateUser}
-        radius="xl"
-        className={styles.updateUserButton}
-      >
+      <Button onClick={onUpdateUser} radius="xl" className={styles.updateUserButton}>
         <Text className={`${typo.size_14_600} ${styles.textButton}`}>Save Information</Text>
       </Button>
     </div>

@@ -23,26 +23,32 @@ export default function Products() {
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductProps[]>([]);
 
-  const getData = useCallback(async ({ tabKey, sortKey }: {tabKey?: string; sortKey?: string, keyword?: string}) => {
-    return await getProducts({
-      categoryId: tabKey ?? currentTab,
-      orderByPrice: sortKey ?? sort,
-      page: page,
-      keyWord: keyword ?? "",
-    });
-  }, [currentTab, page, sort, keyword]);
+  const getData = useCallback(
+    async ({ tabKey, sortKey }: { tabKey?: string; sortKey?: string; keyword?: string }) => {
+      return await getProducts({
+        categoryId: tabKey ?? currentTab,
+        orderByPrice: sortKey ?? sort,
+        page: page,
+        keyWord: keyword ?? "",
+      });
+    },
+    [currentTab, page, sort, keyword],
+  );
 
-  const onFilter = useCallback(async ({ tabKey, sortKey, keyword }: {tabKey?: string; sortKey?: string, keyword?: string}) => {
-    const products = await getData({ tabKey, sortKey, keyword });
-    mutate(keyProduct, products);
-  }, [getData]);
+  const onFilter = useCallback(
+    async ({ tabKey, sortKey, keyword }: { tabKey?: string; sortKey?: string; keyword?: string }) => {
+      const products = await getData({ tabKey, sortKey, keyword });
+      mutate(keyProduct, products);
+    },
+    [getData],
+  );
 
   useEffect(() => {
     keyword && onFilter({ keyword });
   }, [keyword]);
 
   useEffect(() => {
-    if(listProduct) {
+    if (listProduct) {
       setTotal(listProduct.totalResult ?? 0);
       setProducts(listProduct.data ?? []);
     }
@@ -63,7 +69,7 @@ export default function Products() {
   };
 
   const fetchMoreData = async () => {
-    if(page * LIMIT_PAGE_PRODUCT < total) {
+    if (page * LIMIT_PAGE_PRODUCT < total) {
       setPage(page + 1);
       onFilter({});
     }

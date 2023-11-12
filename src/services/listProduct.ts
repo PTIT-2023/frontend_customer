@@ -20,7 +20,7 @@ export const getProducts = _wrapper(async (input?: GetProductsProps) => {
   const urlObject = {
     categoryId: input?.categoryId === "all" ? "" : input?.categoryId,
     limit: (input?.page || 1) * LIMIT_PAGE_PRODUCT,
-    orderByPrice: sortProduct.find(e => e.name === input?.orderByPrice)?.id,
+    orderByPrice: sortProduct.find((e) => e.name === input?.orderByPrice)?.id,
     keyWord: input?.keyWord,
   };
   const parsedQuery = stringifyQueryString(urlObject);

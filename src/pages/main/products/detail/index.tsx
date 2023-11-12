@@ -30,14 +30,14 @@ export default function ProductDetail() {
   };
 
   const addToCart = async () => {
-    if(!localStorage.getItem("userId")) {
+    if (!localStorage.getItem("userId")) {
       router.push("/login");
     } else {
-      const res = await addProductToCart({
+      const res = (await addProductToCart({
         quantity: count,
         unitPrice: data?.price,
         productId: data?.id,
-      }) as Response<null>;
+      })) as Response<null>;
       res.code === StatusCode.Success ? showSuccessNotification(res.message) : showFailNotification(res.message);
     }
   };

@@ -23,10 +23,7 @@ export function Search() {
         rightSection={<IconSearchGray />}
         className={styles.textInput}
       />
-      <Button
-        className={styles.button}
-        onClick={() => router.push("/main/products?tab=all&keyword=" + value)}
-      >
+      <Button className={styles.button} onClick={() => router.push("/main/products?tab=all&keyword=" + value)}>
         <Text className={`${typo.size_14_600} ${styles.textButton}`}>Search</Text>
       </Button>
     </>

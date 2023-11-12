@@ -4,11 +4,21 @@ import typo from "@/styles/text.module.css";
 const OrderDetailHeader = () => {
   return (
     <Box px={20} style={style}>
-      <Text className={`${typo.size_14_600} `} c="white">Image</Text>
-      <Text className={`${typo.size_14_600} `} c="white">Product Name</Text>
-      <Text className={`${typo.size_14_600} `} c="white">Quantity</Text>
-      <Text className={`${typo.size_14_600} `} c="white">Price</Text>
-      <Text className={`${typo.size_14_600} `} c="white">Total Price</Text>
+      <Text className={`${typo.size_14_600} `} c="white">
+        Image
+      </Text>
+      <Text className={`${typo.size_14_600} `} c="white">
+        Product Name
+      </Text>
+      <Text className={`${typo.size_14_600} `} c="white">
+        Quantity
+      </Text>
+      <Text className={`${typo.size_14_600} `} c="white">
+        Price
+      </Text>
+      <Text className={`${typo.size_14_600} `} c="white">
+        Total Price
+      </Text>
     </Box>
   );
 };

@@ -15,17 +15,8 @@ type ImageAndCountFormProps = {
 export function ImageAndCountForm({ product, count, onChangeCount, onAddToCart }: ImageAndCountFormProps) {
   return (
     <div className={styles.container}>
-      <Carousel
-        slideSize="sx"
-        slideGap="xs"
-        loop
-        align="start"
-        controlSize={20}
-        className={styles.carousel}
-      >
-        {product?.imageList?.map((e, i) =>
-          <ProductImage key={i} src={e} width={263} height={170} />
-        )}
+      <Carousel slideSize="sx" slideGap="xs" loop align="start" controlSize={20} className={styles.carousel}>
+        {product?.imageList?.map((e, i) => <ProductImage key={i} src={e} width={263} height={170} />)}
       </Carousel>
 
       <div className={styles.count}>
@@ -39,11 +30,7 @@ export function ImageAndCountForm({ product, count, onChangeCount, onAddToCart }
         />
       </div>
 
-      <Button
-        radius={0}
-        className={styles.button}
-        onClick={onAddToCart}
-      >
+      <Button radius={0} className={styles.button} onClick={onAddToCart}>
         <Text className={`${typo.size_14_600} ${styles.textButton}`}>Add to cart</Text>
       </Button>
     </div>
